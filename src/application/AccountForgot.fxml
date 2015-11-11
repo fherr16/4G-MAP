@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FXMLAccountForgot">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <children>
+            <Text layoutX="134.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Forgot Password?">
+               <font>
+                  <Font size="40.0" />
+               </font>
+            </Text>
+            <Button fx:id="backButton" layoutX="50.0" layoutY="471.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="60.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
