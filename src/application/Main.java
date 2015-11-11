@@ -25,4 +25,8 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	public static void helloWorld(String[] args) {
+		System.out.println("Hello World");
+	}
 }
