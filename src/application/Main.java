@@ -31,7 +31,7 @@ public class Main extends Application {
 	}
 	
 	public static void fabianIsHere(){
-		out.println("Fabian is here too");
+	System.out.println("Fabian is here too");
 	}
 	
 	public static void kevinisHere(){
