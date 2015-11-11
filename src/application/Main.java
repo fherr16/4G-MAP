@@ -29,4 +29,8 @@ public class Main extends Application {
 	public static void helloWorld(String[] args) {
 		System.out.println("Hello World");
 	}
+	
+	public static void fabianIsHere(){
+		out.println("Fabian is here too")
+	}
 }
