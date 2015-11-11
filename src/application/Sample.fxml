@@ -20,8 +20,7 @@
             </Text>
             <Text layoutX="47.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username :" AnchorPane.leftAnchor="47.0" AnchorPane.topAnchor="272.0" />
             <Text layoutX="47.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" AnchorPane.leftAnchor="47.0" AnchorPane.topAnchor="332.0" />
-            <TextField layoutX="137.0" layoutY="272.0" maxWidth="400.0" prefWidth="400.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="272.0" />
-            <TextField layoutX="137.0" layoutY="332.0" maxHeight="1.7976931348623157E308" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="332.0" />
+            <TextField fx:id="usernameField" layoutX="137.0" layoutY="272.0" maxWidth="400.0" prefWidth="400.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="272.0" />
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="243.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../Desktop/depauw_tiger_1-c.jpg" />
@@ -29,6 +28,7 @@
             </ImageView>
             <Hyperlink fx:id="forgotLink" layoutX="300.0" layoutY="418.0" onAction="#hyperLinkAction" text="Forgot Passsword" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
             <Text layoutX="442.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="©" AnchorPane.rightAnchor="131.2958984375" AnchorPane.topAnchor="8.0" />
+            <PasswordField layoutX="137.0" layoutY="345.0" maxWidth="400.0" prefWidth="400.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="332.0" />
          </children>
       </AnchorPane>
    </children>

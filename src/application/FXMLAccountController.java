@@ -32,7 +32,6 @@ public class FXMLAccountController {
         newStage.hide();
         newStage.setScene(home_page_scene);
         newStage.show();
-        
     }
 
 }

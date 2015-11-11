@@ -29,19 +29,22 @@ public class FXMLDocumentController {
     
     @FXML //fx:id="ForgotHyperLink"
     private Hyperlink forgotLink;
+    
+    @FXML //fx:id="usernameField"
+    private TextField usernameField;
 
     @FXML //loginButton
     private void loginButtonAction(ActionEvent event) throws IOException{
-        System.out.println("Selected");
+        System.out.println("Clicked Login");
         
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("Account.fxml")); //New Scene
         Scene home_page_scene = new Scene(home_page_parent);
         
         Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        newStage.hide();
-        newStage.setScene(home_page_scene);
-        newStage.show();
-   
+       // newStage.hide();
+       // newStage.setScene(home_page_scene);
+       // newStage.show();
+        System.out.println(usernameField.getText());
     }
     
     @FXML //createButton
@@ -55,6 +58,7 @@ public class FXMLDocumentController {
         newStage.hide();
         newStage.setScene(home_page_scene);
         newStage.show();
+
     }
     
     @FXML //Hyperlink
