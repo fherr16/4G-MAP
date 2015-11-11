@@ -31,6 +31,10 @@ public class Main extends Application {
 	}
 	
 	public static void fabianIsHere(){
-		out.println("Fabian is here too")
+		out.println("Fabian is here too");
+	}
+	
+	public static void kevinisHere(){
+		System.out.println("Kevin is here too");
 	}
 }
