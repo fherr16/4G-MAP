@@ -13,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AES {
   static String IV = "AAAAAAAAAAAAAAAA";
-  static String plaintext = "test text 123\0\0\0"; /*Note null padding*/
+  static String plaintext = "test text 123\0\0\0";
   static String encryptionKey = "0123456789abcdef";
   
   public static void main(String [] args) {

@@ -10,7 +10,6 @@ public class PasswordGenerator {
 	private static Random r = new Random();
 	private static String pass = new String();
 	private static String finalPassword = new String();
-	private static int counter = 9;
 
 	public void generate() {
 		int spot;
@@ -35,7 +34,7 @@ public class PasswordGenerator {
         pass += integers.charAt (spot);
 		i++;
         
-		while (pass.length () != 10){
+		while (pass.length () != 16){
 			int rPick = r.nextInt(4);
 	        if (rPick == 0){
 	        	spot = r.nextInt(25);
