@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
+	public static PasswordGenerator pass = new PasswordGenerator();
 	@Override
 	  public void start(Stage stage) throws Exception {
 			System.out.println("1");
@@ -24,6 +25,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+		pass.generate();
 	}
 	
 	public static void helloWorld(String[] args) {
