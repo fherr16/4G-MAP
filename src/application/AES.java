@@ -12,7 +12,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AES {
-  static String IV = "AAAAAAAAAAAAAAAA";
+  static String IV = "FabianBradKevinM";
   static String plaintext = "test text 123\0\0\0";
   static String encryptionKey = "0123456789abcdef";
   
