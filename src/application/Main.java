@@ -1,5 +1,7 @@
 package application;
 	
+import java.security.NoSuchAlgorithmException;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -10,6 +12,9 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 	public static PasswordGenerator pass = new PasswordGenerator();
+	public static AES encrypt = new AES();
+	public static Hash hash = new Hash();
+	
 	@Override
 	  public void start(Stage stage) throws Exception {
 			System.out.println("1");
@@ -24,8 +29,25 @@ public class Main extends Application {
 	    }
 	
 	public static void main(String[] args) {
-		launch(args);
+		//launch(args);
 		pass.generate();
+		encrypt.main(args);
+		encrypt.alter("ehsahentthisissomethingdifferent", "1234567890a");
+		encrypt.main(args);
+		try {
+			hash.hash();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		try {
+			byte[] passHash = hash.hash();
+			String x = passHash.toString();
+			encrypt.alter("hellothereniceto", x);
+			encrypt.main(args);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void helloWorld(String[] args) {

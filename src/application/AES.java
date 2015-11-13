@@ -1,4 +1,5 @@
 package application;
+
 import java.security.MessageDigest;
 import java.util.Arrays;
 import javax.crypto.KeyGenerator;
@@ -14,6 +15,7 @@ public class AES {
   static String IV = "AAAAAAAAAAAAAAAA";
   static String plaintext = "test text 123\0\0\0"; /*Note null padding*/
   static String encryptionKey = "0123456789abcdef";
+  
   public static void main(String [] args) {
     try {
       
@@ -36,6 +38,12 @@ public class AES {
     } 
   }
 
+  public static void alter(String text, String key)
+  {
+	  plaintext = text;
+	  encryptionKey = key+"\0\0\0\0\0";
+  }
+  
   public static byte[] encrypt(String plainText, String encryptionKey) throws Exception {
     Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
     SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
