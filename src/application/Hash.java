@@ -1,17 +1,26 @@
 package application;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Hash {
-	String master = "passwordisthethingiamusing";
 	
-	public byte[] hash() throws NoSuchAlgorithmException {
-	    MessageDigest sha256 = MessageDigest.getInstance("SHA-256");        
-	    byte[] passBytes = master.getBytes();
-	    byte[] passHash = sha256.digest(passBytes);
-	    System.out.println(passHash);
-	    return passHash;
-	}
+	public static String sha256(String base) {
+	    try{
+	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	        byte[] hash = digest.digest(base.getBytes("UTF-8"));
+	        StringBuffer hexString = new StringBuffer();
 
+	        for (int i = 0; i < hash.length; i++) {
+	            String hex = Integer.toHexString(0xff & hash[i]);
+	            if(hex.length() == 1) hexString.append('0');
+	            hexString.append(hex);
+	        }
+
+	        return hexString.toString();
+	    } catch(Exception ex){
+	       throw new RuntimeException(ex);
+	    }
+	}
 }

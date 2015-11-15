@@ -14,6 +14,7 @@ public class Main extends Application {
 	public static PasswordGenerator pass = new PasswordGenerator();
 	public static AES encrypt = new AES();
 	public static Hash hash = new Hash();
+	public static String password;
 	
 	@Override
 	  public void start(Stage stage) throws Exception {
@@ -28,41 +29,11 @@ public class Main extends Application {
 	        System.out.println("Hello");
 	    }
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NoSuchAlgorithmException {
 		//launch(args);
-		pass.generate();
-		encrypt.main(args);
-		encrypt.alter("ehsahentthisissomethingdifferent", "1234567890a");
-		encrypt.main(args);
-		try {
-			hash.hash();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		try {
-			byte[] passHash = hash.hash();
-			String x = passHash.toString();
-			encrypt.alter("hellothereniceto", x);
-			encrypt.main(args);
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public static void helloWorld(String[] args) {
-		System.out.println("Hello World");
-	}
-	
-	public static void fabianIsHere(){
-	System.out.println("Fabian is here too");
-	}
-	
-	public static void kevinisHere(){
-		System.out.println("Kevin is here too");
-	}
-	
-	public static void mateuszisHere(){
-		System.out.println("Matt is on top yo!");
+		password = pass.generate();
+		System.out.println(password);
+		String passHash = hash.sha256(password);
+		System.out.println(passHash);
 	}
 }
