@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -32,6 +33,11 @@ public class FXMLDocumentController {
     
     @FXML //fx:id="usernameField"
     private TextField usernameField;
+    
+    @FXML //fx:id="usernameField"
+    private PasswordField passwordField;
+    
+    String testing;
 
     @FXML //loginButton
     private void loginButtonAction(ActionEvent event) throws IOException{
@@ -44,7 +50,9 @@ public class FXMLDocumentController {
        // newStage.hide();
        // newStage.setScene(home_page_scene);
        // newStage.show();
-        System.out.println(usernameField.getText());
+        System.out.println("Username: " + usernameField.getText());
+        System.out.println("Password: " + passwordField.getText());
+        System.out.println(testing);
     }
     
     @FXML //createButton
@@ -72,6 +80,9 @@ public class FXMLDocumentController {
         newStage.setScene(home_page_scene);
         newStage.show();
     	
+    }
+    void setString(String da){
+    	testing = da;
     }
 
 }

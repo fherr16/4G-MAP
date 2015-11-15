@@ -28,7 +28,7 @@
             </ImageView>
             <Hyperlink fx:id="forgotLink" layoutX="300.0" layoutY="418.0" onAction="#hyperLinkAction" text="Forgot Passsword" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
             <Text layoutX="442.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="©" AnchorPane.rightAnchor="131.2958984375" AnchorPane.topAnchor="8.0" />
-            <PasswordField layoutX="137.0" layoutY="345.0" maxWidth="400.0" prefWidth="400.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="332.0" />
+            <PasswordField fx:id="passwordField" layoutX="137.0" layoutY="345.0" maxWidth="400.0" prefWidth="400.0" AnchorPane.leftAnchor="137.0" AnchorPane.topAnchor="332.0" />
          </children>
       </AnchorPane>
    </children>
