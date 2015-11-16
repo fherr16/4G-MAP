@@ -18,22 +18,17 @@ public class Main extends Application {
 	
 	@Override
 	  public void start(Stage stage) throws Exception {
-			System.out.println("1");
-			Parent root = FXMLLoader.load(getClass().getResource("Sample.fxml"));      
-			System.out.println("2");
+			System.out.println("System 1");
+			Parent root = FXMLLoader.load(getClass().getResource("AccountCreation.fxml"));      
+			System.out.println("System 2");
 	        Scene scene = new Scene(root); 
 	        
 	        stage.setScene(scene);
-	        stage.setTitle("GUI Test");
+	        stage.setTitle("4G-MAP");
 	        stage.show();
-	        System.out.println("Hello");
 	    }
 	
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		//launch(args);
-		password = pass.generate();
-		System.out.println(password);
-		String passHash = hash.sha256(password);
-		System.out.println(passHash);
+		launch(args);
 	}
 }

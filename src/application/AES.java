@@ -21,6 +21,7 @@ public class AES {
       
       System.out.println("==Java==");
       System.out.println("plain:   " + plaintext);
+      System.out.println("encryptionKey: " + encryptionKey);
 
       byte[] cipher = encrypt(plaintext, encryptionKey);
 

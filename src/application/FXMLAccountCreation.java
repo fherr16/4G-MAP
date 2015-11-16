@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -23,7 +25,7 @@ import java.io.IOException;
 public class FXMLAccountCreation {
 	
 	@FXML //fx:id="usernameField"
-	 private TextField usernameField;
+	private TextField usernameField;
 	
 	@FXML //fx-id:originalPassword
 	private PasswordField originalPassword;
@@ -45,30 +47,42 @@ public class FXMLAccountCreation {
 	@FXML //Submit Action
 	private void submitButtonAction(ActionEvent event) throws IOException{
         
-        boolean confirm = false;
         
-        //Checks if both Passwords match
-        if(originalPassword.getText().matches(copyPassword.getText())){
-        	System.out.println("Password Match");
-        }
+        String user = null,password = null;
         
-        String user = validateUsername(usernameField.getText());
-        String password = validatePassword(originalPassword.getText());
+        boolean usernameBool = validateUsername(usernameField.getText());
+        boolean passwordBool = validatePassword(originalPassword.getText());
         
-        createAccount(user);
-                
-        if(confirm){
-	        
-	        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Account.fxml")); //New Scene
-	        Scene home_page_scene = new Scene(home_page_parent);
-	        
-	        Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-	        newStage.hide();
-	        newStage.setScene(home_page_scene);
-	        newStage.show();
+        if(usernameBool && passwordBool){ //Checks that both Textfields are valid 
+        	//Hashes password and user for file creation
+        	Hash hash = new Hash();
+        	String userName = usernameField.getText();
+    		user = hash.sha256(usernameField.getText());
+        	String passwordName = originalPassword.getText();
+    		password = hash.sha256(originalPassword.getText());
+    		
+            createAccount(user,password);
+            successMessage("You have sucesfully created an account. Click Ok to be redirected to your Account Page.");
+            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
+            Parent home_page_parent =(Parent)loader.load(); //New Scene
+            Scene home_page_scene = new Scene(home_page_parent);
+            FXMLAccountController controller = (FXMLAccountController)loader.getController();
+            controller.setUserName(userName);
+            controller.setUserPage();
+            
+            
+            Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+            newStage.hide();
+            newStage.setScene(home_page_scene);
+            newStage.show();
         }
         else{
-        	System.out.println("here");
+        	if(!usernameBool)
+        		alertMessage("Username is invalid make sure that the input is correct");
+        	else
+        		alertMessage("Password is invalid make sure that the input is correct");
+        	return;
         }
 	}
 	
@@ -76,11 +90,17 @@ public class FXMLAccountCreation {
 	 * Checks that the Username is valid, by checking that there is no space
 	 * @param userName
 	 * @return hashed version of userName
+	 * @throws IOException 
 	 */
-	public String validateUsername(String userName){
+	public boolean validateUsername(String userName) {
 		
-		//Transform the username into a hash
-		return  "1";
+		PasswordValidator validator = new PasswordValidator();
+		System.out.println(validator.validateUserName(userName));
+		if(validator.validateUserName(userName)){
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -88,18 +108,26 @@ public class FXMLAccountCreation {
 	 * @param password
 	 * @return
 	 */
-	public String validatePassword (String password){
-		return password;
+	public boolean validatePassword (String password){
+		
+		PasswordValidator validator = new PasswordValidator();
+		System.out.println(validator.validate(password));
+		if(validator.validate(password)){
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
 	 * Create Account
 	 * @param userName
 	 */
-	public void createAccount(String userName){
+	public void createAccount(String userName,String password){
+		System.out.println("User: " + userName);
 		 try
 	    	{
-	    	    FileWriter writer = new FileWriter(userName+".csv");
+	    	    FileWriter writer = new FileWriter(userName+password+".csv");
 	    	    System.out.println("File Created");
 	    	    writer.flush();
 	    	    writer.close();
@@ -108,6 +136,30 @@ public class FXMLAccountCreation {
 	    	{
 	    	     e.printStackTrace();
 	    	} 
+	}
+	
+	/**
+	 * Displays Error Message
+	 */
+	public void alertMessage(String errorMessage){
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Username or Password is invalid");
+		alert.setHeaderText(errorMessage);
+
+		alert.showAndWait();
+	}
+
+	/**
+	 * Displays Success Message
+	 */
+	public void successMessage(String successMessage){
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Information Dialog");
+		alert.setHeaderText("Account Creation");
+		alert.setContentText(successMessage);
+
+		alert.showAndWait();
+		
 	}
 	
 	/**
