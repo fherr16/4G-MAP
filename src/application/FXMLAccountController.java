@@ -36,6 +36,7 @@ public class FXMLAccountController {
 	     
 	
 	private String username;
+	private String Master;
 	
 	@FXML //fx:id="CellList"
 	private TableView showSites;
@@ -45,6 +46,12 @@ public class FXMLAccountController {
     
     @FXML // fx:id="logoutButton"
     private Text titlePage;
+    
+    @FXML // fx:id="addDataButton"
+    private Button addData;
+    
+    @FXML // fx:id="addDataButton"
+    private Button generatePassword;
     
     @FXML
     private TableColumn<Website, String> webName;
@@ -65,9 +72,26 @@ public class FXMLAccountController {
         newStage.show();
     }
     
+    @FXML //loginButton
+    private void passwordGenerateButtonAction(ActionEvent event) throws Exception{
+    	String password = null;
+		byte[] encryption = null;
+    	AES encrypt = new AES();
+    	PasswordGenerator pass = new PasswordGenerator();
+    	
+    	password = pass.generate();
+    	System.out.println(password);
+    	
+    	encryption = encrypt.encrypt(password, Master);
+    	
+    }
+    
      void setUserName(String name){
     	username = name;
     }
+     void setPassword(String pass){
+    	 Master = pass;
+     }
     
      void setUserPage(){
     	titlePage.setText("User: " + username);

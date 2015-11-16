@@ -13,10 +13,11 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AES {
   static String IV = "FabianBradKevinM";
-  static String plaintext = "test text 123\0\0\0";
-  static String encryptionKey = "0123456789abcdef";
+  static String plaintext = null;
+  static String encryptionKey = null;
+  static StringBuffer appendingString = new StringBuffer();
   
-  public static void main(String [] args) {
+  public static void main() {
     try {
       
       System.out.println("==Java==");
@@ -41,11 +42,28 @@ public class AES {
 
   public static void alter(String text, String key)
   {
+	  appendingString.append(key);
 	  plaintext = text;
-	  encryptionKey = key+"\0\0\0\0\0";
+	  int counter = key.length();
+	  while(counter < 16)
+	  {
+		  appendingString.append("\0");
+		  counter++;
+	  }
+	  encryptionKey = appendingString.toString();
   }
   
   public static byte[] encrypt(String plainText, String encryptionKey) throws Exception {
+	  appendingString.append(encryptionKey);
+	  int counter = encryptionKey.length();
+	  while(counter < 16)
+	  {
+		  appendingString.append("\0");
+		  counter++;
+	  }
+	  encryptionKey = appendingString.toString();  
+	  
+	  
     Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
     SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
     cipher.init(Cipher.ENCRYPT_MODE, key,new IvParameterSpec(IV.getBytes("UTF-8")));
