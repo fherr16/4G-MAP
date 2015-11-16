@@ -37,6 +37,9 @@ public class FXMLAccountController {
 	
 	private String username;
 	private String Master;
+	private static PasswordGenerator pass = new PasswordGenerator();
+	private static AES encrypt = new AES();
+
 	
 	@FXML //fx:id="CellList"
 	private TableView showSites;
@@ -75,11 +78,13 @@ public class FXMLAccountController {
     @FXML //loginButton
     private void passwordGenerateButtonAction(ActionEvent event) throws Exception{
     	String password = null;
+    	
 		byte[] encryption = null;
-    	AES encrypt = new AES();
-    	PasswordGenerator pass = new PasswordGenerator();
+		
+    	System.out.println("Gen Pass");
     	
     	password = pass.generate();
+    	
     	System.out.println(password);
     	
     	encryption = encrypt.encrypt(password, Master);

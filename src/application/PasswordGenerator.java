@@ -12,6 +12,8 @@ public class PasswordGenerator {
 	private static String finalPassword = new String();
 
 	public String generate() {
+		
+		System.out.println("Im in here");
 		int spot;
 		int u = 0; //With this method of randomization, there is no guarantee that every section will be filled in.
 		int l = 0; //Until we meet, I am just putting in these checks. 
