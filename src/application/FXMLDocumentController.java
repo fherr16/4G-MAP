@@ -66,15 +66,15 @@ public class FXMLDocumentController {
         
         try{
         	 if(usernameBool){
-             	String user = null,password = null;
+             	String user = null,password = null,fileName = null, hFileName;
              	//Create the file reader
              	Hash hash = new Hash();
              	String userName = usernameField.getText();
-         		user = hash.sha256(usernameField.getText());
              	String passwordName = passwordField.getText();
-         		password = hash.sha256(passwordField.getText());
+             	fileName = userName+passwordName;
+             	hFileName = hash.sha256(fileName);
          		
-             	BufferedReader fileReader = new BufferedReader(new FileReader(user+password+".csv"));
+             	BufferedReader fileReader = new BufferedReader(new FileReader(hFileName+".csv"));
              	
              	String line = "";
 
