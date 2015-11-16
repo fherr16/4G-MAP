@@ -16,22 +16,22 @@
                </font></Text>
             <TabPane layoutX="28.0" layoutY="100.0" prefHeight="354.0" prefWidth="551.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Add Website">
+                <Tab text="Generate Password">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="websiteText" layoutX="14.0" layoutY="22.0" promptText="Enter Website" />
+                              <TextField fx:id="websiteText" layoutX="14.0" layoutY="22.0" promptText="Password Description" />
                               <Button fx:id="generateButton" layoutX="177.0" layoutY="22.0" mnemonicParsing="false" onAction="#passwordGenerateButtonAction" text="Generate" />
                            </children></AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Show Website">
+                <Tab text="Show Password">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <TableView fx:id="showSites" cacheShape="false" centerShape="false" layoutY="4.0" prefHeight="272.0" prefWidth="551.0" scaleShape="false">
                                 <columns>
-                                  <TableColumn fx:id="webName" editable="false" prefWidth="142.0" text="Website" />
+                                  <TableColumn fx:id="webName" editable="false" prefWidth="142.0" text="Description" />
                                   <TableColumn fx:id="webPass" editable="false" prefWidth="408.0" sortable="false" text="Password" />
                                 </columns>
                                  <columnResizePolicy>
