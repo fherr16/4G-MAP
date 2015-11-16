@@ -52,8 +52,9 @@ public class FXMLAccountCreation {
         
         boolean usernameBool = validateUsername(usernameField.getText());
         boolean passwordBool = validatePassword(originalPassword.getText());
+        boolean matchingBool = validateMatchingPassword(originalPassword.getText(),(copyPassword.getText()));
         
-        if(usernameBool && passwordBool){ //Checks that both Textfields are valid 
+        if(usernameBool && passwordBool && matchingBool){ //Checks that both Textfields are valid 
         	//Hashes password and user for file creation
         	Hash hash = new Hash();
         	String userName = usernameField.getText();
@@ -70,7 +71,7 @@ public class FXMLAccountCreation {
             FXMLAccountController controller = (FXMLAccountController)loader.getController();
             controller.setUserName(userName);
             controller.setUserPage();
-            
+            //controller.setListView();
             
             Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
             newStage.hide();
@@ -80,6 +81,8 @@ public class FXMLAccountCreation {
         else{
         	if(!usernameBool)
         		alertMessage("Username is invalid make sure that the input is correct");
+        	else if (!matchingBool)
+        		alertMessage("Passwords do not match");
         	else
         		alertMessage("Password is invalid make sure that the input is correct");
         	return;
@@ -120,6 +123,18 @@ public class FXMLAccountCreation {
 	}
 	
 	/**
+	 * Return true if both strings match
+	 * @param passwordOne
+	 * @param passwordTwo
+	 * @return
+	 */
+	public boolean validateMatchingPassword(String passwordOne, String passwordTwo){
+		if(passwordOne.matches(passwordTwo))
+			return true;
+		return false;
+	}
+	
+	/**
 	 * Create Account
 	 * @param userName
 	 */
@@ -144,7 +159,8 @@ public class FXMLAccountCreation {
 	public void alertMessage(String errorMessage){
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Username or Password is invalid");
-		alert.setHeaderText(errorMessage);
+		alert.setHeaderText(null);
+		alert.setContentText(errorMessage);
 
 		alert.showAndWait();
 	}

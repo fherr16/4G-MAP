@@ -10,10 +10,35 @@
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: white;">
          <children>
-            <Text layoutX="98.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Username: John Cena" AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="98.1328125">
+            <Text fx:id="titlePage" layoutX="98.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Username: John Cena" AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="98.1328125">
                <font>
                   <Font size="40.0" />
                </font></Text>
+            <TabPane layoutX="28.0" layoutY="100.0" prefHeight="354.0" prefWidth="551.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Add Website">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                <Tab text="Show Website">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="showSites" cacheShape="false" centerShape="false" layoutY="4.0" prefHeight="272.0" prefWidth="551.0" scaleShape="false">
+                                <columns>
+                                  <TableColumn fx:id="webName" editable="false" prefWidth="142.0" text="Website" />
+                                  <TableColumn fx:id="webPass" editable="false" prefWidth="408.0" sortable="false" text="Password" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
          </children>
       </AnchorPane>
       <Button fx:id="logoutButton" layoutX="52.0" layoutY="502.0" mnemonicParsing="false" onAction="#logoutButtonAction" text="Log Out" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="60.0" />

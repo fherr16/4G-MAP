@@ -19,7 +19,7 @@ public class Main extends Application {
 	@Override
 	  public void start(Stage stage) throws Exception {
 			System.out.println("System 1");
-			Parent root = FXMLLoader.load(getClass().getResource("AccountCreation.fxml"));      
+			Parent root = FXMLLoader.load(getClass().getResource("Sample.fxml"));      
 			System.out.println("System 2");
 	        Scene scene = new Scene(root); 
 	        

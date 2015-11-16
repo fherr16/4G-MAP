@@ -6,21 +6,30 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import javafx.*;
 
 public class FXMLDocumentController {
+	
+	@FXML // fx:id="testButton"
+    private Button testButton;
 	
     @FXML // fx:id="loginButton"
     private Button loginButton;
@@ -38,22 +47,101 @@ public class FXMLDocumentController {
     private PasswordField passwordField;
     
     String testing;
+    	//Delimiter use
+    
+        private static final String COMMA_DELIMITER = ",";
+
+        //Student attributes index
+        private static final int ID_IDX = 0;
+        private static final int WEBNAME_IDX = 1;
+        private static final int PASSWORD_IDX = 2;
+
+
 
     @FXML //loginButton
     private void loginButtonAction(ActionEvent event) throws IOException{
         System.out.println("Clicked Login");
         
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Account.fxml")); //New Scene
-        Scene home_page_scene = new Scene(home_page_parent);
+        boolean usernameBool = validateUsername(usernameField.getText());
         
-        Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-       // newStage.hide();
-       // newStage.setScene(home_page_scene);
-       // newStage.show();
-        System.out.println("Username: " + usernameField.getText());
-        System.out.println("Password: " + passwordField.getText());
-        System.out.println(testing);
+        try{
+        	 if(usernameBool){
+             	String user = null,password = null;
+             	//Create the file reader
+             	Hash hash = new Hash();
+             	String userName = usernameField.getText();
+         		user = hash.sha256(usernameField.getText());
+             	String passwordName = passwordField.getText();
+         		password = hash.sha256(passwordField.getText());
+         		
+             	BufferedReader fileReader = new BufferedReader(new FileReader(user+password+".csv"));
+             	
+             	String line = "";
+
+             	//Read the CSV file header to skip it
+                System.out.println("READ");
+                //Read the file line by line starting from the second line
+                ArrayList<Website> sites = new ArrayList();
+                while ((line = fileReader.readLine()) != null) {
+                    //Get all tokens available in line
+                    String[] tokens = line.split(COMMA_DELIMITER);
+                    if (tokens.length > 0) {
+                    	String websiteName = ((tokens[WEBNAME_IDX]));
+                    	String websitePass = ((tokens[PASSWORD_IDX]));
+                    	Website temp = new Website(websiteName,websitePass);
+                    	sites.add(temp);
+    				}
+                }
+             	
+             	FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
+                Parent home_page_parent =(Parent)loader.load(); //New Scene
+                Scene home_page_scene = new Scene(home_page_parent);
+                FXMLAccountController controller = (FXMLAccountController)loader.getController();
+                controller.setUserName(userName);
+                controller.setUserPage();
+                //controller.setListView(sites);
+                 
+                Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+                newStage.hide();
+                newStage.setScene(home_page_scene);
+                newStage.show();
+             }
+             else{
+             	alertMessage();
+             }
+        }
+        catch(IOException e){
+        	System.out.println(e);
+        	alertMessage();
+        }
     }
+    
+	/**
+	 * Displays Error Message
+	 */
+	public void alertMessage(){
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Username or Password is invalid");
+		alert.setHeaderText(null);
+		alert.setContentText("Username or Password is invalid");
+		
+		alert.showAndWait();
+	}
+    
+    /**
+     * Validates User making sure they are no spaces
+     * @param userName
+     * @return
+     */
+    public boolean validateUsername(String userName) {	
+		PasswordValidator validator = new PasswordValidator();
+		System.out.println(validator.validateUserName(userName));
+		if(validator.validateUserName(userName)){
+			return true;
+		}
+		
+		return false;
+	}
     
     @FXML //createButton
     private void createButtonAction(ActionEvent event) throws IOException{
@@ -83,6 +171,20 @@ public class FXMLDocumentController {
     }
     void setString(String da){
     	testing = da;
+    }
+    
+    @FXML //createButton
+    private void TestButton(ActionEvent event) throws IOException{
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
+        Parent home_page_parent =(Parent)loader.load(); //New Scene
+        Scene home_page_scene = new Scene(home_page_parent);
+        FXMLAccountController controller = (FXMLAccountController)loader.getController();
+         
+        Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        newStage.hide();
+        newStage.setScene(home_page_scene);
+        newStage.show();
+        System.out.println();
     }
 
 }
