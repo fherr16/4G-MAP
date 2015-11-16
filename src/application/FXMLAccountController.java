@@ -1,4 +1,5 @@
 package application;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +21,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -82,5 +86,27 @@ public class FXMLAccountController {
     	showSites.setItems(data);
     	
     }
+    
+    public class appendToFile {
+    	 
+    	   public void append (String fileName, String website, String password) {
+    	 
+    	      BufferedWriter writer = null;
+    	 
+    	      try {
+    	         writer = new BufferedWriter(new FileWriter(fileName, true));
+    	     writer.write(website + "," + password);
+    	     writer.newLine();
+    	     writer.flush();
+    	      } catch (IOException ioe) {
+    	     ioe.printStackTrace();
+    	      } finally {                       // always close the file
+    	     if (writer != null) try {
+    	        writer.close();
+    	     } catch (IOException ioe2) {
 
+    	     }
+    	      } 
+    	   } 
+    	} 
 }
