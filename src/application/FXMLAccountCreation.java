@@ -58,8 +58,9 @@ public class FXMLAccountCreation {
         boolean usernameBool = validateUsername(usernameField.getText());
         boolean passwordBool = validatePassword(originalPassword.getText());
         boolean matchingBool = validateMatchingPassword(originalPassword.getText(),(copyPassword.getText()));
+        boolean hintBool = validateHint(hintField.getText());
         
-        if(usernameBool && passwordBool && matchingBool){ //Checks that both Textfields are valid 
+        if(usernameBool && passwordBool && matchingBool && hintBool){ //Checks that both Textfields are valid 
         	//Hashes password and user for file creation
         	Hash hash = new Hash();
         	String userName = usernameField.getText();
@@ -92,6 +93,8 @@ public class FXMLAccountCreation {
         		alertMessage("Username is invalid make sure that the input is correct");
         	else if (!matchingBool)
         		alertMessage("Passwords do not match");
+        	else if(!hintBool)
+        		alertMessage("Please enter a valid hint. Only letters, and between 1-140 letters long.");
         	else
         		alertMessage("Password is invalid make sure that the input is correct");
         	return;
@@ -123,6 +126,16 @@ public class FXMLAccountCreation {
 		
 		PasswordValidator validator = new PasswordValidator();
 		if(validator.validate(password)){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean validateHint (String hint){
+		
+		PasswordValidator validator = new PasswordValidator();
+		if(validator.validateHint(hint)){
 			return true;
 		}
 		
