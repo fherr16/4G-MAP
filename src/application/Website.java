@@ -5,9 +5,9 @@ public class Website {
 	private String name;
 	private String pass;
 	
-	public Website(String webName, String webPass){
+	public Website(String webName, String something){
 		name = webName;
-		pass = webPass;
+		pass = something;
 	}
 	
 	public String getName(){

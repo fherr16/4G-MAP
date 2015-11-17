@@ -75,6 +75,21 @@ public class AES {
   }
 
   public static String decrypt(byte[] cipherText, String encryptionKey) throws Exception{
+	  	  
+	  if(appendingString.length() > 0)
+		  appendingString.delete(0, appendingString.length());
+	  
+	  appendingString.append(encryptionKey);
+	  int counter = encryptionKey.length();
+	  
+	  while(counter < 16)
+	  {
+		  appendingString.append("\0");
+		  counter++;
+	  }
+	  encryptionKey = appendingString.toString();  
+	  
+	  
     Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
     SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
     cipher.init(Cipher.DECRYPT_MODE, key,new IvParameterSpec(IV.getBytes("UTF-8")));
