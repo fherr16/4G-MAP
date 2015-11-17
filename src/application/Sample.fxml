@@ -25,7 +25,7 @@
             <Text layoutX="47.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username :" AnchorPane.leftAnchor="47.0" AnchorPane.topAnchor="272.0" />
             <Text layoutX="47.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" AnchorPane.leftAnchor="47.0" AnchorPane.topAnchor="332.0" />
             <Text layoutX="442.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="©" AnchorPane.rightAnchor="131.2958984375" AnchorPane.topAnchor="8.0" />
-            <ImageView fitHeight="178.0" fitWidth="167.0" layoutX="255.0" layoutY="77.0" preserveRatio="true">
+            <ImageView fitHeight="178.0" fitWidth="167.0" layoutX="217.0" layoutY="80.0" preserveRatio="true">
                <image>
                   <Image url="@../DePauw_Tigers_logo.png" />
                </image>
