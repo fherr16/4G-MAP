@@ -5,6 +5,7 @@ import java.util.regex.*;
 public class PasswordValidator {
 	private Pattern pattern;
 	private Pattern pattern2;
+	private Pattern pattern3;
 	private Matcher matcher;
 	
 	private static final String passwordPattern =
@@ -13,9 +14,13 @@ public class PasswordValidator {
 	private static final String userNamePattern =
 			"((?!.*\\s).{1,64})";
 	
+	private static final String hintPattern =
+			"(^[\\p{L} .'-]+$)";
+	
 	public PasswordValidator(){
 		pattern = Pattern.compile(passwordPattern);
 		pattern2 = Pattern.compile(userNamePattern);
+		pattern3 = Pattern.compile(hintPattern);
 	}
 	
 	/**
@@ -32,6 +37,12 @@ public class PasswordValidator {
 		matcher = pattern2.matcher(username);
 		return matcher.matches();
 	}
+	
+	public boolean validateHint(String hint){
+		matcher = pattern3.matcher(hint);
+		return matcher.matches();
+	}
+	
 
 
 }
