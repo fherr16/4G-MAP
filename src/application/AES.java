@@ -16,6 +16,7 @@ public class AES {
   static String plaintext = null;
   static String encryptionKey = null;
   static StringBuffer appendingString = new StringBuffer();
+  static StringBuffer plainTextString = new StringBuffer();
   
   public static void main() {
     try {
@@ -55,16 +56,29 @@ public class AES {
   
   public static byte[] encrypt(String plainText, String encryptionKey) throws Exception {
 	  
+	  if(plainTextString.length() > 0)
+		  plainTextString.delete(0, plainTextString.length());
+	  
+	  plainTextString.append(plainText);
+	  int counter = plainText.length();
+	  
+	  while(counter < 16)
+	  {
+		  plainTextString.append("\0");
+		  counter++;
+	  }
+	  plainText = plainTextString.toString();  
+	    
 	  if(appendingString.length() > 0)
 		  appendingString.delete(0, appendingString.length());
 	  
 	  appendingString.append(encryptionKey);
-	  int counter = encryptionKey.length();
+	  int count = encryptionKey.length();
 	  
-	  while(counter < 16)
+	  while(count < 16)
 	  {
 		  appendingString.append("\0");
-		  counter++;
+		  count++;
 	  }
 	  encryptionKey = appendingString.toString();  
 	  
@@ -75,7 +89,7 @@ public class AES {
   }
 
   public static String decrypt(byte[] cipherText, String encryptionKey) throws Exception{
-	  	  
+	  
 	  if(appendingString.length() > 0)
 		  appendingString.delete(0, appendingString.length());
 	  

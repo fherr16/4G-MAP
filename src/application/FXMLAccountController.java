@@ -39,8 +39,6 @@ public class FXMLAccountController {
 	private String Master;
 	private static PasswordGenerator pass = new PasswordGenerator();
 	private static AES encrypt = new AES();
-	private StringBuffer encryptedPass = new StringBuffer();
-	private FileInputStream decryption;
 
 
     private static final String COMMA_DELIMITER = ",";
@@ -91,16 +89,19 @@ public class FXMLAccountController {
     	String password = null;
   	  	
 		byte[] encryption = null;
+		byte[] websiteEncryption = null;
 		    	
     	password = pass.generate();
-    	
+   
     	System.out.println("Password generated: " + password);
     	
+    	String plainText = description.getText();
+    	
     	encryption = encrypt.encrypt(password, Master);
+    	websiteEncryption = encrypt.encrypt(plainText, Master);
     	
     	String encrypted = DatatypeConverter.printHexBinary(encryption);
-    	
-        
+        String websiteEncrypted = DatatypeConverter.printHexBinary(websiteEncryption);
     	
     	System.out.println("Password encrypted: " + encrypted);
     	System.out.println("Password. decrypted: " + encrypt.decrypt(encryption, Master));
@@ -112,7 +113,7 @@ public class FXMLAccountController {
     	String fileName = username+Master;
      	String hFileName = hash.sha256(fileName);
      	String des = description.getText();
-    	append(hFileName,des,encrypted);
+    	append(hFileName,websiteEncrypted,encrypted);
     }
     
      void setUserName(String name){
@@ -138,7 +139,7 @@ public class FXMLAccountController {
     	
     }
     
-    public void append (String fileName, String website, String hexPassword) throws Exception {
+    public void append (String fileName, String hexWebsite, String hexPassword) throws Exception {
     	 
     	      BufferedWriter writer = null;
     	      
@@ -146,21 +147,21 @@ public class FXMLAccountController {
     	 
     	      try {
     	         writer = new BufferedWriter(new FileWriter(fileName+".csv", true));
-    	     writer.write(website + "," + hexPassword);
-    	     writer.newLine();
-    	     writer.flush();
-    	     System.out.println("Finished Writing");
-    	     updateList(fileName);
-    	      } catch (IOException ioe) {
-    	     ioe.printStackTrace();
-    	      } finally {                       // always close the file
-    	     if (writer != null) try {
-    	        writer.close();
-    	     } catch (IOException ioe2) {
+    	         writer.write(hexWebsite + "," + hexPassword);
+    	         writer.newLine();
+    	         writer.flush();
+    	         System.out.println("Finished Writing");
+    	         updateList(fileName);
+    	      	} catch (IOException ioe) {
+    	      		ioe.printStackTrace();
+    	      		} finally {                       // always close the file
+    	      			if (writer != null) try {
+    	      				writer.close();
+    	      			} catch (IOException ioe2) {
 
-    	     }
-    	      } 
-    	   } 
+    	      			}
+    	      		} 
+    	   	} 
     
     public void updateList(String filename) throws Exception{
      try{
@@ -182,7 +183,10 @@ public class FXMLAccountController {
                 byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
                 String original = encrypt.decrypt(encryptedBytes, Master);
             	
-            	Website temp = new Website(websiteName,original);
+                byte[] encryptedWeb = DatatypeConverter.parseHexBinary(websiteName);
+                String website = encrypt.decrypt(encryptedWeb, Master);
+                
+            	Website temp = new Website(website,original);
             	sites.add(temp);
             	setListView(sites);
 			}
