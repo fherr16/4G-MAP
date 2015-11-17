@@ -79,6 +79,7 @@ public class FXMLAccountCreation {
             controller.setUserName(userName);
             controller.setPassword(passwordName);
             controller.setUserPage();
+            controller.addListener();
             //controller.setListView();
             
             Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();

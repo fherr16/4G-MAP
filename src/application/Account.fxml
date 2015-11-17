@@ -22,6 +22,7 @@
                            <children>
                               <TextField fx:id="description" layoutX="14.0" layoutY="22.0" promptText="Password Description" />
                               <Button fx:id="generateButton" layoutX="177.0" layoutY="22.0" mnemonicParsing="false" onAction="#passwordGenerateButtonAction" text="Generate" />
+                              <TextField fx:id="generatedPassword" layoutX="14.0" layoutY="81.0" promptText="Generated Password" />
                            </children></AnchorPane>
                   </content>
                 </Tab>

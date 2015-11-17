@@ -8,22 +8,17 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FXMLAccountForgot">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: grey; -fx-border-color: black;">
+      <AnchorPane layoutY="-7.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: grey; -fx-border-color: black;">
          <children>
-            <Text layoutX="143.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Forgot Password?" AnchorPane.bottomAnchor="506.9609375" AnchorPane.leftAnchor="141.83203125" AnchorPane.rightAnchor="127.16796875" AnchorPane.topAnchor="41.8359375">
+            <Text layoutX="134.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Forgot Password?">
                <font>
                   <Font size="40.0" />
                </font>
             </Text>
             <Button fx:id="backButton" layoutX="50.0" layoutY="471.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="60.0" />
-            <TextField fx:id="userName" alignment="BASELINE_CENTER" layoutX="206.0" layoutY="194.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" promptText="Enter Username" AnchorPane.bottomAnchor="382.0" AnchorPane.leftAnchor="205.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="193.0" />
-            <Button layoutX="362.0" layoutY="194.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#submitButtonAction" text="Get Hint" AnchorPane.bottomAnchor="382.0" AnchorPane.leftAnchor="362.0" AnchorPane.rightAnchor="178.0" AnchorPane.topAnchor="194.0" />
-            <TextArea fx:id="hintField" layoutX="164.0" layoutY="230.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="288.0" promptText="Password Hint Displays Here" AnchorPane.bottomAnchor="301.0" AnchorPane.leftAnchor="164.0" AnchorPane.rightAnchor="149.0" AnchorPane.topAnchor="230.0" />
-            <Text layoutX="206.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter Username:">
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font>
-            </Text>
+            <TextField fx:id="userName" alignment="BASELINE_CENTER" layoutX="157.0" layoutY="194.0" prefHeight="27.0" prefWidth="216.0" promptText="Enter User Name" />
+            <Button layoutX="373.0" layoutY="194.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Get Hint" />
+            <TextArea fx:id="hintField" layoutX="156.0" layoutY="243.0" prefHeight="70.0" prefWidth="288.0" promptText="Password Hint Displays Here" />
          </children>
       </AnchorPane>
    </children>

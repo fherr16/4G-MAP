@@ -69,6 +69,9 @@ public class FXMLAccountController {
     private TextField description;
     
     @FXML
+    private TextField generatedPassword;
+    
+    @FXML
     private TableColumn<Website, String> webName;
     @FXML
     private TableColumn<Website,String> webPass;
@@ -107,6 +110,7 @@ public class FXMLAccountController {
 		byte[] websiteEncryption = null;
 		    	
     	password = pass.generate();
+    	generatedPassword.setText(password);
     	
     	String plainText = description.getText();
     	
