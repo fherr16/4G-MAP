@@ -5,10 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -28,19 +30,44 @@ public class FXMLAccountForgot {
     @FXML
     private TextField userName;
     
+    @FXML
+    private TextArea hintField;
     
+    AES encrypt = new AES();
+    Hash hash = new Hash();
+    int counter = 0;
 	
 	@FXML //Submit Action
 	private void submitButtonAction(ActionEvent event) throws IOException{
 		
-		String user = null;
+		String user = null, hashUser = null, hint = null;
 		
         boolean usernameBool = validateUsername(userName.getText());
-
-        if(usernameBool)
-        {		
+        try{
         	
+        	if(usernameBool)
+        	{		
+        		user = userName.getText();
+        		hashUser = hash.sha256(user);
+        		
+        		BufferedReader fileReader = new BufferedReader(new FileReader(hashUser+".csv"));
+        		String line = "";
+        		
+             	while ((line = fileReader.readLine()) != null)
+             	{
+             		if(counter == 1)
+             		{
+             			hint = line.trim();
+             			counter++;
+             		}
+             		counter++;
+             	}
+        	}
+        }catch(IOException e){
+        	alertMessage();
         }
+        
+        hintField.setText(hint);
 		
 	}
 	
@@ -56,6 +83,15 @@ public class FXMLAccountForgot {
         newStage.hide();
         newStage.setScene(home_page_scene);
         newStage.show();
+	}
+	
+	public void alertMessage(){
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Username or Password is invalid");
+		alert.setHeaderText(null);
+		alert.setContentText("Username or Password is invalid");
+		
+		alert.showAndWait();
 	}
 	
 	public boolean validateUsername(String userName) {
