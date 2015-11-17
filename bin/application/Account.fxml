@@ -20,7 +20,7 @@
                   <content>
                     <AnchorPane blendMode="OVERLAY" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                            <children>
-                              <TextField fx:id="websiteText" layoutX="14.0" layoutY="22.0" promptText="Password Description" />
+                              <TextField fx:id="description" layoutX="14.0" layoutY="22.0" promptText="Password Description" />
                               <Button fx:id="generateButton" layoutX="177.0" layoutY="22.0" mnemonicParsing="false" onAction="#passwordGenerateButtonAction" text="Generate" />
                            </children></AnchorPane>
                   </content>

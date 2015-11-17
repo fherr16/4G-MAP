@@ -52,9 +52,8 @@ public class FXMLDocumentController {
         private static final String COMMA_DELIMITER = ",";
 
         //Student attributes index
-        private static final int ID_IDX = 0;
-        private static final int WEBNAME_IDX = 1;
-        private static final int PASSWORD_IDX = 2;
+        private static final int WEBNAME_IDX = 0;
+        private static final int PASSWORD_IDX = 1;
 
 
 
@@ -100,7 +99,7 @@ public class FXMLDocumentController {
                 controller.setUserName(userName);
                 controller.setPassword(passwordName);
                 controller.setUserPage();
-                //controller.setListView(sites);
+                controller.setListView(sites);
                  
                 Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 newStage.hide();
