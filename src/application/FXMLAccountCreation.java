@@ -32,6 +32,9 @@ public class FXMLAccountCreation {
 	@FXML //fx-id:originalPassword
 	private PasswordField originalPassword;
 	
+	@FXML //fx:id="hintField"
+	private TextField hintField;
+	
 	@FXML //fx-id:copyPassword
 	private PasswordField copyPassword;
 	
@@ -50,7 +53,7 @@ public class FXMLAccountCreation {
 	private void submitButtonAction(ActionEvent event) throws IOException{
         
         
-        String user = null,password = null, fileName = null, hFileName = null;
+        String user = null,password = null, fileName = null, hFileName = null, hint = null;
         
         boolean usernameBool = validateUsername(usernameField.getText());
         boolean passwordBool = validatePassword(originalPassword.getText());
@@ -64,8 +67,9 @@ public class FXMLAccountCreation {
         	fileName = userName;
         	hFileName = hash.sha256(fileName);
         	String passwordHash = hash.sha256(passwordName);
+        	hint = hintField.getText();
         	
-            createAccount(hFileName, passwordHash);
+            createAccount(hFileName, passwordHash, hint);
             successMessage("You have sucesfully created an account. Click Ok to be redirected to your Account Page.");
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
@@ -141,7 +145,7 @@ public class FXMLAccountCreation {
 	 * Create Account
 	 * @param userName
 	 */
-	public void createAccount(String fileName, String password){
+	public void createAccount(String fileName, String password, String hint){
 		 try
 	    	{
 	    	    FileWriter writer = new FileWriter(fileName+".csv");
@@ -159,6 +163,8 @@ public class FXMLAccountCreation {
 		 try {
 	         writer = new BufferedWriter(new FileWriter(fileName+".csv", true));
 	         writer.write(password);
+	         writer.newLine();
+	         writer.write(hint);
 	         writer.newLine();
 	         writer.flush();
 	         System.out.println("Finished Writing");
