@@ -119,7 +119,7 @@ public class FXMLAccountController {
     	Hash hash = new Hash();
     	
     	String encryptedText = description.getText();
-    	String fileName = username+Master;
+    	String fileName = username;
      	String hFileName = hash.sha256(fileName);
      	String des = description.getText();
     	append(hFileName,websiteEncrypted,encrypted);
