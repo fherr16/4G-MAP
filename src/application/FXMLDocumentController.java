@@ -95,11 +95,9 @@ public class FXMLDocumentController {
                     	
                     	byte[] encryptedName = DatatypeConverter.parseHexBinary(websiteName);
                         String website = encrypt.decrypt(encryptedName, passwordName);
-                        System.out.println(website);
                     	
                         byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
                         String original = encrypt.decrypt(encryptedBytes, passwordName);
-                        System.out.println(original);
                     	
                     	Website temp = new Website(website,original);
                     	sites.add(temp);
