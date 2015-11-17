@@ -16,9 +16,9 @@
                </font>
             </Text>
             <Button fx:id="backButton" layoutX="50.0" layoutY="471.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="60.0" />
-            <TextField alignment="BASELINE_CENTER" layoutX="198.0" layoutY="119.0" promptText="Enter User Name" />
-            <Button layoutX="242.0" layoutY="161.0" mnemonicParsing="false" text="Get Hint" />
-            <TextArea layoutX="173.0" layoutY="200.0" prefHeight="70.0" prefWidth="200.0" promptText="Password Hint Displays Here" />
+            <TextField fx:id="userName" alignment="BASELINE_CENTER" layoutX="224.0" layoutY="119.0" promptText="Enter User Name" />
+            <Button layoutX="272.0" layoutY="174.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Get Hint" />
+            <TextArea layoutX="207.0" layoutY="230.0" prefHeight="70.0" prefWidth="200.0" promptText="Password Hint Displays Here" />
          </children>
       </AnchorPane>
    </children>

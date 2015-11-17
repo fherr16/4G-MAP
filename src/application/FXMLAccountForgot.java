@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class FXMLAccountForgot {
@@ -22,18 +25,23 @@ public class FXMLAccountForgot {
 	@FXML //fx:id-backButton
 	private Button backButton;
 	
+    @FXML
+    private TextField userName;
+    
+    
+	
 	@FXML //Submit Action
 	private void submitButtonAction(ActionEvent event) throws IOException{
-		submitButton.setDisable(true);
-        System.out.println("Selected");
-        
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Account.fxml")); //New Scene
-        Scene home_page_scene = new Scene(home_page_parent);
-        
-        Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        newStage.hide();
-        newStage.setScene(home_page_scene);
-        newStage.show();
+		
+		String user = null;
+		
+        boolean usernameBool = validateUsername(userName.getText());
+
+        if(usernameBool)
+        {		
+        	
+        }
+		
 	}
 	
 	@FXML //Back Action
@@ -50,6 +58,15 @@ public class FXMLAccountForgot {
         newStage.show();
 	}
 	
-	
-
+	public boolean validateUsername(String userName) {
+		
+		PasswordValidator validator = new PasswordValidator();
+		System.out.println(validator.validateUserName(userName));
+		
+		if(validator.validateUserName(userName)){
+			return true;
+		}
+		
+		return false;
+	}	
 }

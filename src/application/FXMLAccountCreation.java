@@ -1,5 +1,7 @@
 package application;
 import javafx.event.ActionEvent;
+
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -59,10 +61,11 @@ public class FXMLAccountCreation {
         	Hash hash = new Hash();
         	String userName = usernameField.getText();
         	String passwordName = originalPassword.getText();
-        	fileName = userName + passwordName;
+        	fileName = userName;
         	hFileName = hash.sha256(fileName);
+        	String passwordHash = hash.sha256(passwordName);
         	
-            createAccount(hFileName);
+            createAccount(hFileName, passwordHash);
             successMessage("You have sucesfully created an account. Click Ok to be redirected to your Account Page.");
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
@@ -138,7 +141,7 @@ public class FXMLAccountCreation {
 	 * Create Account
 	 * @param userName
 	 */
-	public void createAccount(String fileName){
+	public void createAccount(String fileName, String password){
 		 try
 	    	{
 	    	    FileWriter writer = new FileWriter(fileName+".csv");
@@ -150,6 +153,24 @@ public class FXMLAccountCreation {
 	    	{
 	    	     e.printStackTrace();
 	    	} 
+		 
+		 BufferedWriter writer = null;
+		 
+		 try {
+	         writer = new BufferedWriter(new FileWriter(fileName+".csv", true));
+	         writer.write(password);
+	         writer.newLine();
+	         writer.flush();
+	         System.out.println("Finished Writing");
+	      	} catch (IOException ioe) {
+	      		ioe.printStackTrace();
+	      		} finally {                       // always close the file
+	      			if (writer != null) try {
+	      				writer.close();
+	      			} catch (IOException ioe2) {
+
+	      			}
+	      		} 
 	}
 	
 	/**
