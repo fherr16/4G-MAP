@@ -48,20 +48,11 @@ public class FXMLDocumentController {
     @FXML //fx:id="usernameField"
     private PasswordField passwordField;
     
+    private LoginFileReader loginReader = new LoginFileReader();
     
     String testing;
     AES encrypt = new AES();
     String pass;
-    int counter = 0;
-    	//Delimiter use
-    
-        private static final String COMMA_DELIMITER = ",";
-
-        //Student attributes index
-        private static final int WEBNAME_IDX = 0;
-        private static final int PASSWORD_IDX = 1;
-
-
 
     @FXML //loginButton
     private void loginButtonAction(ActionEvent event) throws Exception{
@@ -77,73 +68,37 @@ public class FXMLDocumentController {
              	String userName = usernameField.getText();
              	String passwordName = passwordField.getText();
              	String hPassword = hash.sha256(passwordName);
-             	fileName = userName;
-             	hFileName = hash.sha256(fileName);
-         		
-             	BufferedReader fileReader = new BufferedReader(new FileReader(hFileName+".csv"));
-             	
-             	String line = "";
-             	while ((line = fileReader.readLine()) != null)
-             	{
-             		if(counter == 0)
-             		{
-             			pass = line.trim();
-             			System.out.println(pass);
-             			System.out.println(hPassword);
-             			counter++;
-             		}
-             	}
-             	
-             	if(hPassword.equals(pass)){
-             		line = "";
-             	
-             		//Read the CSV file header to skip it
-             		System.out.println("READ");
-             		//Read the file line by line starting from the second line
-             		ArrayList<Website> sites = new ArrayList();
-             		
-             		while ((line = fileReader.readLine()) != null) {
-             			//Get all tokens available in line
-             			String[] tokens = line.split(COMMA_DELIMITER);
-             			if (tokens.length > 0) {
-             				String websiteName = ((tokens[WEBNAME_IDX]));
-             				String websitePass = ((tokens[PASSWORD_IDX]));
-             				
-             				byte[] encryptedName = DatatypeConverter.parseHexBinary(websiteName);
-             				String website = encrypt.decrypt(encryptedName, passwordName);
-             				
-             				byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
-             				String original = encrypt.decrypt(encryptedBytes, passwordName);
-             				
-             				Website temp = new Website(website,original);
-             				sites.add(temp);
-             			}		
-             		}
-             	
-             		FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
-             		Parent home_page_parent =(Parent)loader.load(); //New Scene
-             		Scene home_page_scene = new Scene(home_page_parent);
-             		FXMLAccountController controller = (FXMLAccountController)loader.getController();
-             		controller.setUserName(userName);
-             		controller.setPassword(passwordName);
-             		controller.setUserPage();
-             		controller.setListView(sites);
-             		controller.addListener();
-             		
-             		Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-             		newStage.hide();
-             		newStage.setScene(home_page_scene);
-             		newStage.show();
-             	}
-             	else{
+             
+             	hFileName = hash.sha256(userName);
+ 	
+             	//Checks if username and password are correct
+             	if(!loginReader.LoginFile(hFileName, hPassword)){
              		alertMessage();
-             		counter = 0;
+             		return;
              	}
+             	
+             	if(!loginReader.viewList(passwordName)){
+             		alertMessage();
+             		return;
+             	}
+             	
+             	ArrayList<Website> sites = loginReader.getViewList();
+             		
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
+             	Parent home_page_parent =(Parent)loader.load(); //New Scene
+             	Scene home_page_scene = new Scene(home_page_parent);
+             	FXMLAccountController controller = (FXMLAccountController)loader.getController();
+             	controller.setUserName(userName);
+           		controller.setPassword(passwordName);
+           		controller.setUserPage();
+           		controller.setListView(sites);
+           		controller.addListener();
+             		
+           		Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+           		newStage.hide();
+           		newStage.setScene(home_page_scene);
+           		newStage.show();
         	 }
-             else{
-             	alertMessage();
-             	counter = 0;
-             }
         }
         catch(IOException e){
         	System.out.println(e);
@@ -204,22 +159,4 @@ public class FXMLDocumentController {
         newStage.show();
     	
     }
-    void setString(String da){
-    	testing = da;
-    }
-    
-    @FXML //createButton
-    private void TestButton(ActionEvent event) throws IOException{
-    	FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
-        Parent home_page_parent =(Parent)loader.load(); //New Scene
-        Scene home_page_scene = new Scene(home_page_parent);
-        FXMLAccountController controller = (FXMLAccountController)loader.getController();
-         
-        Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-        newStage.hide();
-        newStage.setScene(home_page_scene);
-        newStage.show();
-        System.out.println();
-    }
-
 }
