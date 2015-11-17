@@ -19,7 +19,7 @@
             <Button fx:id="createButton" layoutX="42.0" layoutY="492.0" mnemonicParsing="false" onAction="#createButtonAction" text="Create Account" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="60.0" />
             <Text layoutX="188.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="4G-MAP" textAlignment="CENTER" AnchorPane.bottomAnchor="515.0" AnchorPane.leftAnchor="188.0" AnchorPane.rightAnchor="158.25" AnchorPane.topAnchor="0.0">
                <font>
-                  <Font size="64.0" />
+                  <Font name="Segoe UI" size="64.0" />
                </font>
             </Text>
             <Text layoutX="47.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username :" AnchorPane.leftAnchor="47.0" AnchorPane.topAnchor="272.0" />
