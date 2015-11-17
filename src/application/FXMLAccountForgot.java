@@ -67,6 +67,8 @@ public class FXMLAccountForgot {
         	alertMessage();
         }
         
+        counter = 0;
+        
         hintField.setText(hint);
 		
 	}

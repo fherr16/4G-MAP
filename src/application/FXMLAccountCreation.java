@@ -221,7 +221,6 @@ public class FXMLAccountCreation {
         Scene home_page_scene = new Scene(home_page_parent);
         
         FXMLDocumentController controller = (FXMLDocumentController)loader.getController();
-        controller.setString("D");
         
         Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
         newStage.hide();

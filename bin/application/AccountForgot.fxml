@@ -10,15 +10,15 @@
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: grey; -fx-border-color: black;">
          <children>
-            <Text layoutX="134.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Forgot Password?">
+            <Text layoutX="134.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Forgot Password?">
                <font>
                   <Font size="40.0" />
                </font>
             </Text>
             <Button fx:id="backButton" layoutX="50.0" layoutY="471.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="60.0" />
-            <TextField fx:id="userName" alignment="BASELINE_CENTER" layoutX="224.0" layoutY="119.0" promptText="Enter User Name" />
-            <Button layoutX="272.0" layoutY="174.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Get Hint" />
-            <TextArea fx:id="hintField" layoutX="207.0" layoutY="230.0" prefHeight="70.0" prefWidth="200.0" promptText="Password Hint Displays Here" />
+            <TextField fx:id="userName" alignment="BASELINE_CENTER" layoutX="206.0" layoutY="194.0" promptText="Enter User Name" />
+            <Button layoutX="362.0" layoutY="194.0" mnemonicParsing="false" onAction="#submitButtonAction" text="Get Hint" />
+            <TextArea fx:id="hintField" layoutX="156.0" layoutY="230.0" prefHeight="70.0" prefWidth="288.0" promptText="Password Hint Displays Here" />
          </children>
       </AnchorPane>
    </children>
