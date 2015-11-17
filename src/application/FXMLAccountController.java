@@ -178,6 +178,7 @@ public class FXMLAccountController {
     	BufferedReader fileReader = new BufferedReader(new FileReader(filename+".csv"));
      	
      	String line = "";
+     	int count = 0;
      	
      	//Read the CSV file header to skip it
         System.out.println("READ");
@@ -185,20 +186,24 @@ public class FXMLAccountController {
         ArrayList<Website> sites = new ArrayList();
         while ((line = fileReader.readLine()) != null) {
             //Get all tokens available in line
-            String[] tokens = line.split(COMMA_DELIMITER);
-            if (tokens.length > 0) {
-            	String websiteName = ((tokens[WEBNAME_IDX]));
-            	String websitePass = ((tokens[PASSWORD_IDX]));
+        	if(count == 2){
+        		String[] tokens = line.split(COMMA_DELIMITER);
+        		if (tokens.length > 0) {
+        			String websiteName = ((tokens[WEBNAME_IDX]));
+        			String websitePass = ((tokens[PASSWORD_IDX]));
+        			
+        			byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
+        			String original = encrypt.decrypt(encryptedBytes, Master);
             	
-                byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
-                String original = encrypt.decrypt(encryptedBytes, Master);
-            	
-                byte[] encryptedWeb = DatatypeConverter.parseHexBinary(websiteName);
-                String website = encrypt.decrypt(encryptedWeb, Master);
+        			byte[] encryptedWeb = DatatypeConverter.parseHexBinary(websiteName);
+        			String website = encrypt.decrypt(encryptedWeb, Master);
                 
-            	Website temp = new Website(website,original);
-            	sites.add(temp);
-            	setListView(sites);
+        			Website temp = new Website(website,original);
+        			sites.add(temp);
+        			setListView(sites);
+        		}
+        		else
+        			count++;
 			}
         }
      }catch(IOException e){
