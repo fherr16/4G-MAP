@@ -106,8 +106,6 @@ public class FXMLAccountController {
 		byte[] websiteEncryption = null;
 		    	
     	password = pass.generate();
-   
-    	System.out.println("Password generated: " + password);
     	
     	String plainText = description.getText();
     	
@@ -116,9 +114,6 @@ public class FXMLAccountController {
     	
     	String encrypted = DatatypeConverter.printHexBinary(encryption);
         String websiteEncrypted = DatatypeConverter.printHexBinary(websiteEncryption);
-    	
-    	System.out.println("Password encrypted: " + encrypted);
-    	System.out.println("Password. decrypted: " + encrypt.decrypt(encryption, Master));
         
         
     	Hash hash = new Hash();
