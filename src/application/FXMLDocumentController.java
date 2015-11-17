@@ -112,6 +112,7 @@ public class FXMLDocumentController {
                 controller.setPassword(passwordName);
                 controller.setUserPage();
                 controller.setListView(sites);
+                controller.addListener();
                  
                 Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
                 newStage.hide();

@@ -11,6 +11,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import javax.xml.bind.DatatypeConverter;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -69,6 +71,8 @@ public class FXMLAccountController {
     private TableColumn<Website, String> webName;
     @FXML
     private TableColumn<Website,String> webPass;
+    @FXML
+    private TextField passwordClipBoard;
 
     @FXML //loginButton
     private void logoutButtonAction(ActionEvent event) throws IOException{
@@ -83,6 +87,16 @@ public class FXMLAccountController {
         newStage.setScene(home_page_scene);
         newStage.show();
     }
+    
+    void addListener(){
+   	 showSites.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>(){
+       	 @Override
+       	 public void changed (ObservableValue<?> observable, Object oldvalue, Object newValue) {
+       		 int loc = (data.indexOf(newValue));
+       		 passwordClipBoard.setText(sites.get(loc).getPass());
+       	 }
+        });
+   }
     
     @FXML //loginButton
     private void passwordGenerateButtonAction(ActionEvent event) throws Exception{
@@ -127,17 +141,18 @@ public class FXMLAccountController {
     	titlePage.setText("User: " + username);
     }
      
-    void setListView(ArrayList<Website> sites){
-    	System.out.println("VIEW");
-    	webName.setCellValueFactory(
-                 new PropertyValueFactory<Website, String>("name"));
-    	webPass.setCellValueFactory(
-                new PropertyValueFactory<Website, String>("pass"));
-    	data =  FXCollections.observableArrayList(sites);
-    	showSites.setItems(data);
-    	
-    	
-    }
+     void setListView(ArrayList<Website> sites){
+     	System.out.println("VIEW");
+     	webName.setCellValueFactory(
+                  new PropertyValueFactory<Website, String>("name"));
+     	webPass.setCellValueFactory(
+                 new PropertyValueFactory<Website, String>("pass"));
+     	this.sites = sites;
+     	data =  FXCollections.observableArrayList(sites);
+     	showSites.setItems(data);
+     	
+     	
+     }
     
     public void append (String fileName, String hexWebsite, String hexPassword) throws Exception {
     	 
