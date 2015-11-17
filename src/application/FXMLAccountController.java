@@ -41,6 +41,7 @@ public class FXMLAccountController {
 	private String Master;
 	private static PasswordGenerator pass = new PasswordGenerator();
 	private static AES encrypt = new AES();
+ 	int count = 0;
 
 
     private static final String COMMA_DELIMITER = ",";
@@ -178,7 +179,6 @@ public class FXMLAccountController {
     	BufferedReader fileReader = new BufferedReader(new FileReader(filename+".csv"));
      	
      	String line = "";
-     	int count = 0;
      	
      	//Read the CSV file header to skip it
         System.out.println("READ");
@@ -202,10 +202,11 @@ public class FXMLAccountController {
         			sites.add(temp);
         			setListView(sites);
         		}
-        		else
-        			count++;
-			}
+        	}
+        	else
+        		count++;
         }
+        count = 0;
      }catch(IOException e){
     	 
      }
