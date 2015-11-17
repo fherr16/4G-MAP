@@ -74,15 +74,10 @@ public class FXMLAccountController {
     	String password = null;
     	
 		byte[] encryption = null;
-		
-    	System.out.println("Gen Pass");
-    	
+		    	
     	password = pass.generate();
     	
-    	System.out.println(password);
-    	
     	encryption = encrypt.encrypt(password, Master);
-    	
     }
     
      void setUserName(String name){
@@ -131,7 +126,5 @@ public class FXMLAccountController {
     	     }
     	      } 
     	   } 
-    	}
-    
-    
+    	}   
 }

@@ -8,9 +8,9 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FXMLAccountController">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: white;">
+      <AnchorPane prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: grey; -fx-border-color: black;">
          <children>
-            <Text fx:id="titlePage" layoutX="98.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Username: John Cena" AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="98.1328125">
+            <Text fx:id="titlePage" layoutX="98.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="Username: " AnchorPane.leftAnchor="98.0" AnchorPane.rightAnchor="98.1328125">
                <font>
                   <Font size="40.0" />
                </font></Text>
@@ -18,7 +18,7 @@
               <tabs>
                 <Tab text="Generate Password">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane blendMode="OVERLAY" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: white;">
                            <children>
                               <TextField fx:id="websiteText" layoutX="14.0" layoutY="22.0" promptText="Password Description" />
                               <Button fx:id="generateButton" layoutX="177.0" layoutY="22.0" mnemonicParsing="false" onAction="#passwordGenerateButtonAction" text="Generate" />

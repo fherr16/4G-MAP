@@ -3,17 +3,17 @@ import java.util.Random;
 
 public class PasswordGenerator {
 
-	private static final String lowerCase = "abcdefghijklmnopqrstuvwxyz";
-	private static final String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-	private static final String symbol = "!@#$%^&*";
-	private static final String integers = "0123456789";
-	private static Random r = new Random();
-	private static String pass = new String();
-	private static String finalPassword = new String();
+	private String lowerCase = "abcdefghijklmnopqrstuvwxyz";
+	private String upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	private String symbol = "!@#$%^&*";
+	private String integers = "0123456789";
+	private Random r = new Random();
+	private String pass = new String();
+	private String finalPassword = new String();
 
 	public String generate() {
 		
-		System.out.println("Im in here");
+		pass = "";
 		int spot = 0;
 		int u = 0; 
 		int l = 0; 
@@ -37,7 +37,6 @@ public class PasswordGenerator {
 		i++;
         
 		while (pass.length () < 16){
-			System.out.println("Im in the while loop");
 			int rPick = r.nextInt(4);
 			if (rPick == 0){
 				spot = r.nextInt(25);
@@ -60,8 +59,10 @@ public class PasswordGenerator {
 				i++;
 			}
 		}
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append(pass);
+		finalPassword = "";
 	
 	while(sb.length() > 0)
 	{
@@ -70,7 +71,6 @@ public class PasswordGenerator {
 		finalPassword += sb.charAt(letter);
 		sb.deleteCharAt(letter);
 	}
-	
 	return finalPassword;
 	}
 }
