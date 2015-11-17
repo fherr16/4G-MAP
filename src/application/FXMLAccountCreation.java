@@ -77,6 +77,7 @@ public class FXMLAccountCreation {
             Scene home_page_scene = new Scene(home_page_parent);
             FXMLAccountController controller = (FXMLAccountController)loader.getController();
             controller.setUserName(userName);
+            controller.setPassword(passwordName);
             controller.setUserPage();
             //controller.setListView();
             

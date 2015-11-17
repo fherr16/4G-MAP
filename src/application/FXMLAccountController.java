@@ -119,7 +119,7 @@ public class FXMLAccountController {
     	Hash hash = new Hash();
     	
     	String encryptedText = description.getText();
-    	String fileName = username+Master;
+    	String fileName = username;
      	String hFileName = hash.sha256(fileName);
      	String des = description.getText();
     	append(hFileName,websiteEncrypted,encrypted);
@@ -186,7 +186,7 @@ public class FXMLAccountController {
         ArrayList<Website> sites = new ArrayList();
         while ((line = fileReader.readLine()) != null) {
             //Get all tokens available in line
-        	if(count == 2){
+        	if(count >= 2){
         		String[] tokens = line.split(COMMA_DELIMITER);
         		if (tokens.length > 0) {
         			String websiteName = ((tokens[WEBNAME_IDX]));

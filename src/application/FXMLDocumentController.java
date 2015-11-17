@@ -51,6 +51,8 @@ public class FXMLDocumentController {
     
     String testing;
     AES encrypt = new AES();
+    String pass;
+    int counter = 0;
     	//Delimiter use
     
         private static final String COMMA_DELIMITER = ",";
@@ -74,53 +76,73 @@ public class FXMLDocumentController {
              	Hash hash = new Hash();
              	String userName = usernameField.getText();
              	String passwordName = passwordField.getText();
-             	fileName = userName+passwordName;
+             	String hPassword = hash.sha256(passwordName);
+             	fileName = userName;
              	hFileName = hash.sha256(fileName);
          		
              	BufferedReader fileReader = new BufferedReader(new FileReader(hFileName+".csv"));
              	
              	String line = "";
+             	while ((line = fileReader.readLine()) != null)
+             	{
+             		if(counter == 0)
+             		{
+             			pass = line.trim();
+             			System.out.println(pass);
+             			System.out.println(hPassword);
+             			counter++;
+             		}
+             	}
              	
-             	//Read the CSV file header to skip it
-                System.out.println("READ");
-                //Read the file line by line starting from the second line
-                ArrayList<Website> sites = new ArrayList();
-
-                while ((line = fileReader.readLine()) != null) {
-                	//Get all tokens available in line
-                    String[] tokens = line.split(COMMA_DELIMITER);
-                    if (tokens.length > 0) {
-                    	String websiteName = ((tokens[WEBNAME_IDX]));
-                    	String websitePass = ((tokens[PASSWORD_IDX]));
-                    	
-                    	byte[] encryptedName = DatatypeConverter.parseHexBinary(websiteName);
-                        String website = encrypt.decrypt(encryptedName, passwordName);
-                    	
-                        byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
-                        String original = encrypt.decrypt(encryptedBytes, passwordName);
-                    	
-                    	Website temp = new Website(website,original);
-                    	sites.add(temp);
-    				}
-                }
+             	if(hPassword.equals(pass)){
+             		line = "";
              	
-             	FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
-                Parent home_page_parent =(Parent)loader.load(); //New Scene
-                Scene home_page_scene = new Scene(home_page_parent);
-                FXMLAccountController controller = (FXMLAccountController)loader.getController();
-                controller.setUserName(userName);
-                controller.setPassword(passwordName);
-                controller.setUserPage();
-                controller.setListView(sites);
-                controller.addListener();
-                 
-                Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
-                newStage.hide();
-                newStage.setScene(home_page_scene);
-                newStage.show();
-             }
+             		//Read the CSV file header to skip it
+             		System.out.println("READ");
+             		//Read the file line by line starting from the second line
+             		ArrayList<Website> sites = new ArrayList();
+             		
+             		while ((line = fileReader.readLine()) != null) {
+             			//Get all tokens available in line
+             			String[] tokens = line.split(COMMA_DELIMITER);
+             			if (tokens.length > 0) {
+             				String websiteName = ((tokens[WEBNAME_IDX]));
+             				String websitePass = ((tokens[PASSWORD_IDX]));
+             				
+             				byte[] encryptedName = DatatypeConverter.parseHexBinary(websiteName);
+             				String website = encrypt.decrypt(encryptedName, passwordName);
+             				
+             				byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
+             				String original = encrypt.decrypt(encryptedBytes, passwordName);
+             				
+             				Website temp = new Website(website,original);
+             				sites.add(temp);
+             			}		
+             		}
+             	
+             		FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
+             		Parent home_page_parent =(Parent)loader.load(); //New Scene
+             		Scene home_page_scene = new Scene(home_page_parent);
+             		FXMLAccountController controller = (FXMLAccountController)loader.getController();
+             		controller.setUserName(userName);
+             		controller.setPassword(passwordName);
+             		controller.setUserPage();
+             		controller.setListView(sites);
+             		controller.addListener();
+             		
+             		Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+             		newStage.hide();
+             		newStage.setScene(home_page_scene);
+             		newStage.show();
+             	}
+             	else{
+             		alertMessage();
+             		counter = 0;
+             	}
+        	 }
              else{
              	alertMessage();
+             	counter = 0;
              }
         }
         catch(IOException e){
