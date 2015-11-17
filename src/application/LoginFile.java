@@ -74,10 +74,10 @@ public class LoginFile {
 	             	String websitePass = ((tokens[PASSWORD_IDX]));
 	             	
 	             	byte[] encryptedName = DatatypeConverter.parseHexBinary(websiteName);
-	                String website = encrypt.decrypts(encryptedName, passwordName);
+	                String website = encrypt.decrypt(encryptedName, passwordName);
 	             	
 	                byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
-	                String original = encrypt.decrypts(encryptedBytes, passwordName);
+	                String original = encrypt.decrypt(encryptedBytes, passwordName);
 	             	
 	             	Website temp = new Website(website,original);
 	             	sites.add(temp);
