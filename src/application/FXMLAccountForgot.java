@@ -89,9 +89,9 @@ public class FXMLAccountForgot {
 	
 	public void alertMessage(){
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Username or Password is invalid");
+		alert.setTitle("File Does Not Exist");
 		alert.setHeaderText(null);
-		alert.setContentText("Username or Password is invalid");
+		alert.setContentText("The Username you entered does not exist");
 		
 		alert.showAndWait();
 	}
@@ -99,7 +99,6 @@ public class FXMLAccountForgot {
 	public boolean validateUsername(String userName) {
 		
 		PasswordValidator validator = new PasswordValidator();
-		System.out.println(validator.validateUserName(userName));
 		
 		if(validator.validateUserName(userName)){
 			return true;

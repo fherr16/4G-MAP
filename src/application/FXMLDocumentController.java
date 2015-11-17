@@ -55,9 +55,7 @@ public class FXMLDocumentController {
     String pass;
 
     @FXML //loginButton
-    private void loginButtonAction(ActionEvent event) throws Exception{
-        System.out.println("Clicked Login");
-        
+    private void loginButtonAction(ActionEvent event) throws Exception{        
         boolean usernameBool = validateUsername(usernameField.getText());
         
         try{
@@ -101,7 +99,6 @@ public class FXMLDocumentController {
         	 }
         }
         catch(IOException e){
-        	System.out.println(e);
         	alertMessage();
         }
     }
@@ -125,7 +122,6 @@ public class FXMLDocumentController {
      */
     public boolean validateUsername(String userName) {	
 		PasswordValidator validator = new PasswordValidator();
-		System.out.println(validator.validateUserName(userName));
 		if(validator.validateUserName(userName)){
 			return true;
 		}
@@ -135,7 +131,6 @@ public class FXMLDocumentController {
     
     @FXML //createButton
     private void createButtonAction(ActionEvent event) throws IOException{
-        System.out.println("Selected");
         
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccountCreation.fxml")); //New Scene
         Scene home_page_scene = new Scene(home_page_parent);
@@ -149,7 +144,6 @@ public class FXMLDocumentController {
     
     @FXML //Hyperlink
     private void hyperLinkAction(ActionEvent event) throws IOException{
-    	System.out.println("Link Click");
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("AccountForgot.fxml")); //New Scene
         Scene home_page_scene = new Scene(home_page_parent);
         

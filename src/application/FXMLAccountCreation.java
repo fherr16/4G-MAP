@@ -106,7 +106,6 @@ public class FXMLAccountCreation {
 	public boolean validateUsername(String userName) {
 		
 		PasswordValidator validator = new PasswordValidator();
-		System.out.println(validator.validateUserName(userName));
 		if(validator.validateUserName(userName)){
 			return true;
 		}
@@ -122,7 +121,6 @@ public class FXMLAccountCreation {
 	public boolean validatePassword (String password){
 		
 		PasswordValidator validator = new PasswordValidator();
-		System.out.println(validator.validate(password));
 		if(validator.validate(password)){
 			return true;
 		}
@@ -150,7 +148,6 @@ public class FXMLAccountCreation {
 		 try
 	    	{
 	    	    FileWriter writer = new FileWriter(fileName+".csv");
-	    	    System.out.println("File Created");
 	    	    writer.flush();
 	    	    writer.close();
 	    	}
@@ -168,7 +165,6 @@ public class FXMLAccountCreation {
 	         writer.write(hint);
 	         writer.newLine();
 	         writer.flush();
-	         System.out.println("Finished Writing");
 	      	} catch (IOException ioe) {
 	      		ioe.printStackTrace();
 	      		} finally {                       // always close the file
@@ -213,7 +209,6 @@ public class FXMLAccountCreation {
 	@FXML //Back Action
 	private void backButtonAction(ActionEvent event) throws IOException{
 		backButton.setDisable(true);
-        System.out.println("Selected");
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Sample.fxml"));
         Parent home_page_parent =(Parent)loader.load(); //New Scene
