@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import javax.xml.bind.DatatypeConverter;
+
 import javafx.*;
 
 public class FXMLDocumentController {
@@ -46,7 +48,9 @@ public class FXMLDocumentController {
     @FXML //fx:id="usernameField"
     private PasswordField passwordField;
     
+    
     String testing;
+    AES encrypt = new AES();
     	//Delimiter use
     
         private static final String COMMA_DELIMITER = ",";
@@ -58,7 +62,7 @@ public class FXMLDocumentController {
 
 
     @FXML //loginButton
-    private void loginButtonAction(ActionEvent event) throws IOException{
+    private void loginButtonAction(ActionEvent event) throws Exception{
         System.out.println("Clicked Login");
         
         boolean usernameBool = validateUsername(usernameField.getText());
@@ -76,18 +80,24 @@ public class FXMLDocumentController {
              	BufferedReader fileReader = new BufferedReader(new FileReader(hFileName+".csv"));
              	
              	String line = "";
-
+             	
              	//Read the CSV file header to skip it
                 System.out.println("READ");
                 //Read the file line by line starting from the second line
                 ArrayList<Website> sites = new ArrayList();
+
                 while ((line = fileReader.readLine()) != null) {
-                    //Get all tokens available in line
+                	//Get all tokens available in line
                     String[] tokens = line.split(COMMA_DELIMITER);
                     if (tokens.length > 0) {
                     	String websiteName = ((tokens[WEBNAME_IDX]));
                     	String websitePass = ((tokens[PASSWORD_IDX]));
-                    	Website temp = new Website(websiteName,websitePass);
+                    	
+                        byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
+                        String original = encrypt.decrypt(encryptedBytes, passwordName);
+                        System.out.println(original);
+                    	
+                    	Website temp = new Website(websiteName,original);
                     	sites.add(temp);
     				}
                 }

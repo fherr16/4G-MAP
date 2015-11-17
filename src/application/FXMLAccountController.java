@@ -3,10 +3,13 @@ package application;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import javax.xml.bind.DatatypeConverter;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +39,8 @@ public class FXMLAccountController {
 	private String Master;
 	private static PasswordGenerator pass = new PasswordGenerator();
 	private static AES encrypt = new AES();
+	private StringBuffer encryptedPass = new StringBuffer();
+	private FileInputStream decryption;
 
 
     private static final String COMMA_DELIMITER = ",";
@@ -84,21 +89,30 @@ public class FXMLAccountController {
     @FXML //loginButton
     private void passwordGenerateButtonAction(ActionEvent event) throws Exception{
     	String password = null;
-    	
+  	  	
 		byte[] encryption = null;
 		    	
     	password = pass.generate();
     	
+    	System.out.println("Password generated: " + password);
+    	
     	encryption = encrypt.encrypt(password, Master);
     	
+    	String encrypted = DatatypeConverter.printHexBinary(encryption);
+    	
+        
+    	
+    	System.out.println("Password encrypted: " + encrypted);
+    	System.out.println("Password. decrypted: " + encrypt.decrypt(encryption, Master));
+        
+        
     	Hash hash = new Hash();
     	
     	String encryptedText = description.getText();
-    	System.out.println(encryption);
     	String fileName = username+Master;
      	String hFileName = hash.sha256(fileName);
      	String des = description.getText();
-    	append(hFileName,des,password);
+    	append(hFileName,des,encrypted);
     }
     
      void setUserName(String name){
@@ -124,16 +138,18 @@ public class FXMLAccountController {
     	
     }
     
-    public void append (String fileName, String website, String password) {
+    public void append (String fileName, String website, String hexPassword) throws Exception {
     	 
     	      BufferedWriter writer = null;
+    	      
     	      System.out.println("Writing");
     	 
     	      try {
     	         writer = new BufferedWriter(new FileWriter(fileName+".csv", true));
-    	     writer.write(website + "," + password);
+    	     writer.write(website + "," + hexPassword);
     	     writer.newLine();
     	     writer.flush();
+    	     System.out.println("Finished Writing");
     	     updateList(fileName);
     	      } catch (IOException ioe) {
     	     ioe.printStackTrace();
@@ -146,12 +162,12 @@ public class FXMLAccountController {
     	      } 
     	   } 
     
-    public void updateList(String filename) throws IOException{
+    public void updateList(String filename) throws Exception{
      try{
     	BufferedReader fileReader = new BufferedReader(new FileReader(filename+".csv"));
      	
      	String line = "";
-
+     	
      	//Read the CSV file header to skip it
         System.out.println("READ");
         //Read the file line by line starting from the second line
@@ -162,7 +178,11 @@ public class FXMLAccountController {
             if (tokens.length > 0) {
             	String websiteName = ((tokens[WEBNAME_IDX]));
             	String websitePass = ((tokens[PASSWORD_IDX]));
-            	Website temp = new Website(websiteName,websitePass);
+            	
+                byte[] encryptedBytes = DatatypeConverter.parseHexBinary(websitePass);
+                String original = encrypt.decrypt(encryptedBytes, Master);
+            	
+            	Website temp = new Website(websiteName,original);
             	sites.add(temp);
             	setListView(sites);
 			}
@@ -170,5 +190,5 @@ public class FXMLAccountController {
      }catch(IOException e){
     	 
      }
-     }
+    }
 }
