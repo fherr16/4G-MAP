@@ -81,7 +81,6 @@ public class FXMLAccountController {
     @FXML //loginButton
     private void logoutButtonAction(ActionEvent event) throws IOException{
     	logoutButton.setDisable(true);
-        System.out.println("Selected");
         
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("Sample.fxml")); //New Scene
         Scene home_page_scene = new Scene(home_page_parent);
@@ -142,7 +141,6 @@ public class FXMLAccountController {
     }
      
      void setListView(ArrayList<Website> sites){
-     	System.out.println("VIEW");
      	webName.setCellValueFactory(
                   new PropertyValueFactory<Website, String>("name"));
      	webPass.setCellValueFactory(
@@ -157,15 +155,12 @@ public class FXMLAccountController {
     public void append (String fileName, String hexWebsite, String hexPassword) throws Exception {
     	 
     	      BufferedWriter writer = null;
-    	      
-    	      System.out.println("Writing");
-    	 
+    	          	 
     	      try {
     	         writer = new BufferedWriter(new FileWriter(fileName+".csv", true));
     	         writer.write(hexWebsite + "," + hexPassword);
     	         writer.newLine();
     	         writer.flush();
-    	         System.out.println("Finished Writing");
     	         updateList(fileName);
     	      	} catch (IOException ioe) {
     	      		ioe.printStackTrace();
@@ -185,7 +180,6 @@ public class FXMLAccountController {
      	String line = "";
      	
      	//Read the CSV file header to skip it
-        System.out.println("READ");
         //Read the file line by line starting from the second line
         ArrayList<Website> sites = new ArrayList();
         while ((line = fileReader.readLine()) != null) {
