@@ -186,7 +186,7 @@ public class FXMLAccountController {
         ArrayList<Website> sites = new ArrayList();
         while ((line = fileReader.readLine()) != null) {
             //Get all tokens available in line
-        	if(count == 2){
+        	if(count >= 2){
         		String[] tokens = line.split(COMMA_DELIMITER);
         		if (tokens.length > 0) {
         			String websiteName = ((tokens[WEBNAME_IDX]));
