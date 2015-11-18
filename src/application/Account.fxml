@@ -39,7 +39,7 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <Button layoutX="407.0" layoutY="282.0" mnemonicParsing="false" text="Button" />
+                              <Button fx:id="deleteButton" layoutX="407.0" layoutY="282.0" mnemonicParsing="false" onAction="#deleteEntryButtonAction" text="Delete Password" />
                               <TextField fx:id="passwordClipBoard" layoutY="276.0" />
                            </children>
                         </AnchorPane>
