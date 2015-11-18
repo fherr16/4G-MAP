@@ -15,7 +15,7 @@ public class PasswordValidator {
 			"((?!.*\\s).{1,64})";
 	
 	private static final String hintPattern =
-			"((^[\\p{L} .'-]+$).{1,140})";
+			"((^[\\p{L} .'-]+$))";
 	
 	public PasswordValidator(){
 		pattern = Pattern.compile(passwordPattern);
