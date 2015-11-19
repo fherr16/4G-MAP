@@ -7,11 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import javafx.scene.input.KeyEvent;
 import javax.xml.bind.DatatypeConverter;
 
 import javafx.application.Platform;
@@ -27,16 +26,15 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 
 public class FXMLAccountController {
 	
@@ -85,6 +83,8 @@ public class FXMLAccountController {
     private TableColumn<Website,String> webPass;
     @FXML
     private TextField passwordClipBoard;
+    
+    
     
     int loc = 2;
 	Timer time;
@@ -157,6 +157,13 @@ public class FXMLAccountController {
        	         time = new Timer();
        	         time.schedule(new RemindTask(), 5000);
               	    }
+       	});
+       	scene.addEventFilter(KeyEvent.ANY, new EventHandler<KeyEvent>(){
+       		public void handle(KeyEvent e) {
+   	    	 time.cancel();
+   	         time = new Timer();
+   	         time.schedule(new RemindTask(), 5000);
+       		}
        	});
    }
     
