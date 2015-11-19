@@ -244,7 +244,6 @@ public class FXMLAccountController {
      */
     public void removeLineFromFile(String file, int i) {
     	try {
-    		System.out.println(i);
 	      file = file+".csv";
 	      File inFile = new File (file);
 	      
