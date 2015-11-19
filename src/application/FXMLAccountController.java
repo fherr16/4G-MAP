@@ -84,6 +84,16 @@ public class FXMLAccountController {
     @FXML //loginButton
     private void logoutButtonAction(ActionEvent event) throws IOException{
     	logoutButton.setDisable(true);
+    	Hash hash = new Hash();
+    	
+    	
+    	String user = username;
+     	String fileName = hash.sha256(user);
+    	
+     	String currentFile = fileName+".csv";
+    	String oldBackUpFile = File.separator+"Users"+File.separator+"fabianherrera"+File.separator+"Documents"+File.separator+"DePauw"+File.separator+"Backups"+File.separator+fileName+".csv";
+    	
+    	updateBackUpAccount(oldBackUpFile,currentFile);
         
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("Sample.fxml")); //New Scene
         Scene home_page_scene = new Scene(home_page_parent);
@@ -319,4 +329,28 @@ public class FXMLAccountController {
     	 
      }
     }
+    
+	public void updateBackUpAccount(String oldFile, String newFile){
+		 try
+	    	{
+			    FileWriter fileWritter = new FileWriter(oldFile,false);
+		        BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+		        
+		        String line = "";
+		    	BufferedReader fileReader = new BufferedReader(new FileReader(newFile));
+		    	
+		        while ((line = fileReader.readLine()) != null) {
+		            bufferWritter.write(line);
+		            bufferWritter.flush();
+		            bufferWritter.newLine();
+		        }
+		        bufferWritter.close();
+		    	
+	    	}
+	        catch(IOException e)
+	    	{
+	    	     e.printStackTrace();
+	    	} 
+		 
+	}
 }

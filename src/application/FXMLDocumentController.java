@@ -19,8 +19,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
@@ -69,6 +74,16 @@ public class FXMLDocumentController {
              
              	hFileName = hash.sha256(userName);
  	
+             	String currentFile = hFileName+".csv";
+            	String backUpFile = File.separator+"Users"+File.separator+"fabianherrera"+File.separator+"Documents"+File.separator+"DePauw"+File.separator+"Backups"+File.separator+hFileName+".csv";
+            	
+            	if(!compareBackUpToCurrent(backUpFile,currentFile))
+            	{
+            		System.out.println("Your file has been corrupted, attempting to repare.");
+            		updateCurrentFile(currentFile, backUpFile);
+            		System.out.println("File Restored");
+            	}
+            	
              	//Checks if username and password are correct
              	if(!loginReader.LoginFile(hFileName, hPassword)){
              		alertMessage();
@@ -79,7 +94,7 @@ public class FXMLDocumentController {
              		alertMessage();
              		return;
              	}
-             	
+             	             	
              	ArrayList<Website> sites = loginReader.getViewList();
              		
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
@@ -141,6 +156,59 @@ public class FXMLDocumentController {
         newStage.show();
 
     }
+    
+	public boolean compareBackUpToCurrent(String backUp, String current){
+		 try
+	    	{
+			 FileReader first = new FileReader(backUp);
+			 FileReader second = new FileReader(current);
+			 
+			 BufferedReader backUps = new BufferedReader(first);
+			 BufferedReader original = new BufferedReader(second);
+			 
+			 String backUpLine = "";
+			 String currentLine = "";
+			 
+			 while((backUpLine = backUps.readLine()) != null && (currentLine = original.readLine()) != null)
+			 {
+				 if(!backUpLine.equals(currentLine))
+				 {
+					 return false;
+				 }
+			 }
+		    	
+	    	}
+	        catch(IOException e)
+	    	{
+	    	     e.printStackTrace();
+	    	} 
+		 return true;
+		 
+	}
+	
+	public void updateCurrentFile(String oldFile, String newFile){
+		 try
+	    	{
+			    FileWriter fileWritter = new FileWriter(oldFile,false);
+		        BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
+		        
+		        String line = "";
+		    	BufferedReader fileReader = new BufferedReader(new FileReader(newFile));
+		    	
+		        while ((line = fileReader.readLine()) != null) {
+		            bufferWritter.write(line);
+		            bufferWritter.flush();
+		            bufferWritter.newLine();
+		        }
+		        bufferWritter.close();
+		    	
+	    	}
+	        catch(IOException e)
+	    	{
+	    	     e.printStackTrace();
+	    	} 
+		 
+	}
     
     @FXML //Hyperlink
     private void hyperLinkAction(ActionEvent event) throws IOException{
