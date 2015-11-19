@@ -91,20 +91,21 @@ public class FXMLAccountController {
     
     class RemindTask extends TimerTask {
 	    public void run() {
-	    	Platform.runLater(() -> {
-	    		Alert alert = new Alert(AlertType.ERROR);
-	    		alert.setTitle("Logout");
-	    		alert.setHeaderText(null);
-	    		alert.setContentText("You've been logged out due to inactivity");
-	    		alert.showAndWait();
-	    	  System.exit(0);
-	    	});
+		    	Platform.runLater(() -> {
+		    		Alert alert = new Alert(AlertType.ERROR);
+		    		alert.setTitle("Logout");
+		    		alert.setHeaderText(null);
+		    		alert.setContentText("You've been logged out due to inactivity");
+		    		alert.showAndWait();
+		    	  System.exit(0);
+		    	});
+	    	
 	    }
     }
     
     public FXMLAccountController(){
     	time = new Timer();
-	    time.schedule(new RemindTask(), 5*1000);
+	    time.schedule(new RemindTask(), 60*1000);
     }
 
     @FXML //loginButton
@@ -134,9 +135,16 @@ public class FXMLAccountController {
    	 showSites.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>(){
        	 @Override
        	 public void changed (ObservableValue<?> observable, Object oldvalue, Object newValue) {
-       		 loc = (data.indexOf(newValue));
-       		 passwordClipBoard.setText(sites.get(loc).getPass());
-       	 }
+       		 try{
+       			 data =  FXCollections.observableArrayList(sites);
+       			 loc = (data.indexOf(newValue));
+       			
+       			passwordClipBoard.setText(sites.get(loc).getPass());
+       		 }
+       		catch(Exception e){
+       			passwordClipBoard.setText("");
+	    	}
+       	}
         }); 
    }
    void addListenerAction(ActionEvent event){
@@ -147,7 +155,7 @@ public class FXMLAccountController {
        	    public void handle(MouseEvent mouseEvent) {
        	    	 time.cancel();
        	         time = new Timer();
-       	         time.schedule(new RemindTask(), 5000);
+       	         time.schedule(new RemindTask(), 60000);
               	    }
        	});
        	scene.addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
@@ -155,14 +163,14 @@ public class FXMLAccountController {
        	    public void handle(MouseEvent mouseEvent) {
        	    	 time.cancel();
        	         time = new Timer();
-       	         time.schedule(new RemindTask(), 5000);
+       	         time.schedule(new RemindTask(), 60000);
               	    }
        	});
        	scene.addEventFilter(KeyEvent.ANY, new EventHandler<KeyEvent>(){
        		public void handle(KeyEvent e) {
    	    	 time.cancel();
    	         time = new Timer();
-   	         time.schedule(new RemindTask(), 5000);
+   	         time.schedule(new RemindTask(), 60000);
        		}
        	});
    }
@@ -319,12 +327,12 @@ public class FXMLAccountController {
     	titlePage.setText("User: " + username);
     }
      
-     void setListView(ArrayList<Website> sites){
+     void setListView(ArrayList<Website> NewSites){
      	webName.setCellValueFactory(
                   new PropertyValueFactory<Website, String>("name"));
      	webPass.setCellValueFactory(
                  new PropertyValueFactory<Website, String>("pass"));
-     	this.sites = sites;
+     	this.sites = NewSites;
      	data =  FXCollections.observableArrayList(sites);
      	showSites.setItems(data);
      	
@@ -360,7 +368,7 @@ public class FXMLAccountController {
      	
      	//Read the CSV file header to skip it
         //Read the file line by line starting from the second line
-        ArrayList<Website> sites = new ArrayList();
+        sites = new ArrayList();
         while ((line = fileReader.readLine()) != null) {
             //Get all tokens available in line
         	if(count >= 2){
@@ -385,7 +393,7 @@ public class FXMLAccountController {
         }
         count = 0;
      }catch(IOException e){
-    	 
+    	 System.out.println("ERROR LIST UPDATE");
      }
     }
     
