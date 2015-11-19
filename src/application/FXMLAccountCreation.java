@@ -2,6 +2,7 @@ package application;
 import javafx.event.ActionEvent;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import javafx.fxml.FXML;
@@ -71,6 +72,8 @@ public class FXMLAccountCreation {
         	hint = hintField.getText();
         	
             createAccount(hFileName, passwordHash, hint);
+            createBackUpAccount(hFileName,passwordHash,hint);
+            
             successMessage("You have sucesfully created an account. Click Ok to be redirected to your Account Page.");
             
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Account.fxml"));    
@@ -174,6 +177,38 @@ public class FXMLAccountCreation {
 		 
 		 try {
 	         writer = new BufferedWriter(new FileWriter(fileName+".csv", true));
+	         writer.write(password);
+	         writer.newLine();
+	         writer.write(hint);
+	         writer.newLine();
+	         writer.flush();
+	      	} catch (IOException ioe) {
+	      		ioe.printStackTrace();
+	      		} finally {                       // always close the file
+	      			if (writer != null) try {
+	      				writer.close();
+	      			} catch (IOException ioe2) {
+
+	      			}
+	      		} 
+	}
+	
+	public void createBackUpAccount(String fileName, String password, String hint){
+		 try
+	    	{
+	    	    FileWriter writer = new FileWriter(File.separator+"Users"+File.separator+"fabianherrera"+File.separator+"Documents"+File.separator+"DePauw"+File.separator+"Backups"+File.separator+fileName+".csv");
+	    	    writer.flush();
+	    	    writer.close();
+	    	}
+	        catch(IOException e)
+	    	{
+	    	     e.printStackTrace();
+	    	} 
+		 
+		 BufferedWriter writer = null;
+		 
+		 try {
+	         writer = new BufferedWriter(new FileWriter(File.separator+"Users"+File.separator+"fabianherrera"+File.separator+"Documents"+File.separator+"DePauw"+File.separator+ "Backups"+File.separator+fileName+".csv", true));
 	         writer.write(password);
 	         writer.newLine();
 	         writer.write(hint);
