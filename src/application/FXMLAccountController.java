@@ -80,6 +80,8 @@ public class FXMLAccountController {
     private TableColumn<Website,String> webPass;
     @FXML
     private TextField passwordClipBoard;
+    
+    int loc = 2;
 
     @FXML //loginButton
     private void logoutButtonAction(ActionEvent event) throws IOException{
@@ -108,7 +110,7 @@ public class FXMLAccountController {
    	 showSites.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>(){
        	 @Override
        	 public void changed (ObservableValue<?> observable, Object oldvalue, Object newValue) {
-       		 int loc = (data.indexOf(newValue));
+       		 loc = (data.indexOf(newValue));
        		 passwordClipBoard.setText(sites.get(loc).getPass());
        	 }
         });
@@ -152,6 +154,95 @@ public class FXMLAccountController {
      	String des = description.getText();
     	append(hFileName,websiteEncrypted,encrypted);
     }
+    
+    /**
+     * This is the action for the deleteButton
+     * 
+     * @param event
+     * @throws Exception
+     */
+    @FXML //deleteButton
+    private void deleteEntryButtonAction(ActionEvent event) throws Exception{
+    	String file = null;
+    	int num = 0;
+    	Hash hash = new Hash();
+    	String fileName = username;
+    	file = hash.sha256(fileName);
+    	num = loc+2;
+    	
+    	removeLineFromFile(file, num);
+    	updateList(file);
+    }
+    
+    /**
+     * Method removes an entry from the file. 
+     * 
+     * Totally not done yet. Problem: Could not delete the file. 
+     * May be using file and cannot overwrite the lock on the file. 
+     * 
+     * @param file
+     * @param i
+     */
+    public void removeLineFromFile(String file, int i) {
+    	try {
+    		System.out.println(i);
+	      file = file+".csv";
+	      File inFile = new File (file);
+	      
+	      //mainly here for testing
+	      if (!inFile.isFile()) {
+	        System.out.println("Parameter is not an existing file");
+	        return;
+	      }
+
+	      //Construct the new file that will later be renamed to the original filename.
+	      File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+	      
+
+	      BufferedReader br = new BufferedReader(new FileReader(file));
+	      BufferedWriter pw = new BufferedWriter(new FileWriter(tempFile));
+	      String line = null;
+	      int count = 0;
+	      //Read from the original file and write to the new unless content matches data to be removed.
+	      while ((line = br.readLine()) != null) {
+	    	  if (!(count == i)) {
+
+	          pw.write(line);
+	          pw.flush();
+	          pw.newLine();
+	          }
+	    	  count++;
+	      }
+	      pw.close();
+	      br.close();
+	      
+	      BufferedReader b = new BufferedReader(new FileReader(tempFile));
+	      BufferedWriter p = new BufferedWriter(new FileWriter(file));
+
+	      while ((line = b.readLine()) != null) {
+	    	  p.write(line);
+
+	    	  p.flush();
+	    	  p.newLine();
+	      }
+	      p.close();
+	      b.close();
+	      
+	      boolean tes = tempFile.delete();
+	      
+	      if (!tes) {
+	    	System.out.println("Why you no work");
+	      }
+
+	    }
+	    catch (FileNotFoundException ex) {
+	        ex.printStackTrace();
+	    }
+	    catch (IOException ex) {
+	      ex.printStackTrace();
+	    }
+	  }    
+    
     /**
      * Validates User making sure they are no spaces
      * @param userName
@@ -165,89 +256,6 @@ public class FXMLAccountController {
 		
 		return false;
 	}
-    
-    
-    /**
-     * This is the action for the deleteButton
-     * 
-     * @param event
-     * @throws Exception
-     */
-    @FXML //deleteButton
-    private void deleteEntryButtonAction(ActionEvent event) throws Exception{
-    	String file = null;
-    	int num = 0;
-    	String line = null;
-    	Hash hash = new Hash();
-    	String fileName = username;
-    	file = hash.sha256(fileName);
-    	//Where is num being stored for the line number? 
-    	line = passwordClipBoard.getText();
-    	
-    	removeLineFromFile(file, line);
-    }
-    
-    /**
-     * Method removes an entry from the file. 
-     * 
-     * Totally not done yet. Problem: Could not delete the file. 
-     * May be using file and cannot overwrite the lock on the file. 
-     * 
-     * @param file
-     * @param i
-     */
-    
-    public void removeLineFromFile(String file, String lineRemove) {
-	    try {
-	      file = file+".csv";
-	      File inFile = new File (file);
-	      
-	      //mainly here for testing
-	      if (!inFile.isFile()) {
-	        System.out.println("Parameter is not an existing file");
-	        return;
-	      }
-
-	      //Construct the new file that will later be renamed to the original filename.
-	      File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
-
-	      BufferedReader br = new BufferedReader(new FileReader(file));
-	      PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
-
-	      String line = null;
-	      int count = 0;
-	      //Read from the original file and write to the new unless content matches data to be removed.
-	      while ((line = br.readLine()) != null) {
-	    	 // if (count == i) {
-
-	        if (!line.trim().equals(lineRemove)) {
-
-	          pw.println(line);
-	          pw.flush();
-	        }
-	    	  count++;
-	      }
-	      pw.close();
-	      br.close();
-
-	      //Delete the original file
-	      if (!inFile.delete()) {
-	        System.out.println("Could not delete file");
-	        return;
-	      }
-
-	      //Rename the new file to the filename the original file had.
-	      if (!tempFile.renameTo(inFile))
-	        System.out.println("Could not rename file");
-
-	    }
-	    catch (FileNotFoundException ex) {
-	        ex.printStackTrace();
-	    }
-	    catch (IOException ex) {
-	      ex.printStackTrace();
-	    }
-	  }
     
      void setUserName(String name){
     	username = name;
