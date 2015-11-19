@@ -53,21 +53,23 @@ public class FXMLAccountCreation {
 	@FXML //Submit Action
 	private void submitButtonAction(ActionEvent event) throws IOException{
         
+		Hash hash = new Hash();
         
-        String user = null,password = null, fileName = null, hFileName = null, hint = null;
+        String hint = null;
+        String userName = usernameField.getText();
+        String hFileName = hash.sha256(userName);
+    	String passwordName = originalPassword.getText();
         
-        boolean usernameBool = validateUsername(usernameField.getText());
-        boolean passwordBool = validatePassword(originalPassword.getText());
-        boolean matchingBool = validateMatchingPassword(originalPassword.getText(),(copyPassword.getText()));
+        
+        boolean usernameBool = validateUsername(userName);
+        boolean fileExistence = checkFileExist(hFileName+".csv");
+        boolean passwordBool = validatePassword(passwordName);
+        boolean matchingBool = validateMatchingPassword(passwordName,(copyPassword.getText()));
         boolean hintBool = validateHint(hintField.getText());
         
-        if(usernameBool && passwordBool && matchingBool && hintBool){ //Checks that both Textfields are valid 
+        if(usernameBool && !fileExistence && passwordBool && matchingBool && hintBool){ //Checks that both Textfields are valid 
         	//Hashes password and user for file creation
-        	Hash hash = new Hash();
-        	String userName = usernameField.getText();
-        	String passwordName = originalPassword.getText();
-        	fileName = userName;
-        	hFileName = hash.sha256(fileName);
+        	hFileName = hash.sha256(userName);
         	String passwordHash = hash.sha256(passwordName);
         	hint = hintField.getText();
         	
@@ -94,6 +96,8 @@ public class FXMLAccountCreation {
         else{
         	if(!usernameBool)
         		alertMessage("Username is invalid make sure that the input is correct");
+        	else if(fileExistence)
+        		alertMessage("Username already taken");
         	else if (!matchingBool)
         		alertMessage("Passwords do not match");
         	else if(!hintBool)
@@ -117,6 +121,17 @@ public class FXMLAccountCreation {
 			return true;
 		}
 		
+		return false;
+	}
+	
+	/**
+	 * Checks that the hashed named of the user does not already exist;
+	 */
+	public boolean checkFileExist(String username){
+		File f = new File(username);
+		if(f.exists()){
+			return true;
+		}
 		return false;
 	}
 	
