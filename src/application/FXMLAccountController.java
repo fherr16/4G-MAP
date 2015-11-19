@@ -129,7 +129,7 @@ public class FXMLAccountController {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Description");
 			alert.setHeaderText(null);
-			alert.setContentText("Missing Description");
+			alert.setContentText("Description Input is invalid. Max of 16 characters and only letters.");
 			
 			alert.showAndWait();
 			return;
@@ -250,7 +250,7 @@ public class FXMLAccountController {
      */
     public boolean validateDescription(String userName) {	
 		PasswordValidator validator = new PasswordValidator();
-		if(validator.validateHint(userName)){
+		if(validator.validateDescription(userName)){
 			return true;
 		}
 		

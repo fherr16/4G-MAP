@@ -6,6 +6,7 @@ public class PasswordValidator {
 	private Pattern pattern;
 	private Pattern pattern2;
 	private Pattern pattern3;
+	private Pattern pattern4;
 	private Matcher matcher;
 	
 	private static final String passwordPattern =
@@ -17,10 +18,14 @@ public class PasswordValidator {
 	private static final String hintPattern =
 			"((^[\\p{L} .'-]{1,140}+$))";
 	
+	private static final String DescriptionPattern =
+			"((^[\\p{L} .'-]{1,16}+$))";
+	
 	public PasswordValidator(){
 		pattern = Pattern.compile(passwordPattern);
 		pattern2 = Pattern.compile(userNamePattern);
 		pattern3 = Pattern.compile(hintPattern);
+		pattern4 = Pattern.compile(DescriptionPattern);
 	}
 	
 	/**
@@ -30,6 +35,12 @@ public class PasswordValidator {
 	   */
 	public boolean validate (final String password){
 		matcher = pattern.matcher(password);
+		return matcher.matches();
+	}
+	
+	public boolean validateDescription(final String description)
+	{
+		matcher = pattern4.matcher(description);
 		return matcher.matches();
 	}
 	
