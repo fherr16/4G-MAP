@@ -106,6 +106,7 @@ public class FXMLDocumentController {
            		controller.setUserPage();
            		controller.setListView(sites);
            		controller.addListener();
+           		controller.addListenerAction(event);
              		
            		Stage newStage = (Stage)((Node) event.getSource()).getScene().getWindow();
            		newStage.hide();
