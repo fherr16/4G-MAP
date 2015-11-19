@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
-
 public class Main extends Application {
 	public static PasswordGenerator pass = new PasswordGenerator();
 	public static AES encrypt = new AES();
