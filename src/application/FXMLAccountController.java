@@ -9,14 +9,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.xml.bind.DatatypeConverter;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -29,6 +33,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -82,6 +87,25 @@ public class FXMLAccountController {
     private TextField passwordClipBoard;
     
     int loc = 2;
+	Timer time;
+    
+    class RemindTask extends TimerTask {
+	    public void run() {
+	    	Platform.runLater(() -> {
+	    		Alert alert = new Alert(AlertType.ERROR);
+	    		alert.setTitle("Logout");
+	    		alert.setHeaderText(null);
+	    		alert.setContentText("You've been logged out due to inactivity");
+	    		alert.showAndWait();
+	    	  System.exit(0);
+	    	});
+	    }
+    }
+    
+    public FXMLAccountController(){
+    	time = new Timer();
+	    time.schedule(new RemindTask(), 5*1000);
+    }
 
     @FXML //loginButton
     private void logoutButtonAction(ActionEvent event) throws IOException{
@@ -113,7 +137,27 @@ public class FXMLAccountController {
        		 loc = (data.indexOf(newValue));
        		 passwordClipBoard.setText(sites.get(loc).getPass());
        	 }
-        });
+        }); 
+   }
+   void addListenerAction(ActionEvent event){
+	  	//Timer
+   	Stage scene = (Stage)((Node) event.getSource()).getScene().getWindow();
+       	scene.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+       	    @Override
+       	    public void handle(MouseEvent mouseEvent) {
+       	    	 time.cancel();
+       	         time = new Timer();
+       	         time.schedule(new RemindTask(), 5000);
+              	    }
+       	});
+       	scene.addEventFilter(MouseEvent.MOUSE_MOVED, new EventHandler<MouseEvent>() {
+       	    @Override
+       	    public void handle(MouseEvent mouseEvent) {
+       	    	 time.cancel();
+       	         time = new Timer();
+       	         time.schedule(new RemindTask(), 5000);
+              	    }
+       	});
    }
     
     @FXML //loginButton
