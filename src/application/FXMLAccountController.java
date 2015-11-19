@@ -22,10 +22,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -108,11 +110,22 @@ public class FXMLAccountController {
   	  	
 		byte[] encryption = null;
 		byte[] websiteEncryption = null;
+		
+    	String plainText = description.getText();
+		
+		if(!validateDescription(plainText)){
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Description");
+			alert.setHeaderText(null);
+			alert.setContentText("Missing Description");
+			
+			alert.showAndWait();
+			return;
+		}
 		    	
     	password = pass.generate();
     	generatedPassword.setText(password);
     	
-    	String plainText = description.getText();
     	
     	encryption = encrypt.encrypt(password, Master);
     	websiteEncryption = encrypt.encrypt(plainText, Master);
@@ -129,6 +142,20 @@ public class FXMLAccountController {
      	String des = description.getText();
     	append(hFileName,websiteEncrypted,encrypted);
     }
+    /**
+     * Validates User making sure they are no spaces
+     * @param userName
+     * @return
+     */
+    public boolean validateDescription(String userName) {	
+		PasswordValidator validator = new PasswordValidator();
+		if(validator.validateHint(userName)){
+			return true;
+		}
+		
+		return false;
+	}
+    
     
     /**
      * This is the action for the deleteButton
