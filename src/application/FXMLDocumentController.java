@@ -73,7 +73,7 @@ public class FXMLDocumentController {
              	String hPassword = hash.sha256(passwordName);
              
              	hFileName = hash.sha256(userName);
- 	
+             	
              	String currentFile = hFileName+".csv";
             	String backUpFile = File.separator+"Users"+File.separator+"fabianherrera"+File.separator+"Documents"+File.separator+"DePauw"+File.separator+"Backups"+File.separator+hFileName+".csv";
             	
@@ -181,7 +181,7 @@ public class FXMLDocumentController {
 	    	}
 	        catch(IOException e)
 	    	{
-	    	     e.printStackTrace();
+	    	     alertMessage();
 	    	} 
 		 return true;
 		 
@@ -206,7 +206,7 @@ public class FXMLDocumentController {
 	    	}
 	        catch(IOException e)
 	    	{
-	    	     e.printStackTrace();
+	    	     alertMessage();
 	    	} 
 		 
 	}
