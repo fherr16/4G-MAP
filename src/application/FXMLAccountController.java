@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.input.KeyEvent;
@@ -28,6 +29,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -222,15 +224,25 @@ public class FXMLAccountController {
      */
     @FXML //deleteButton
     private void deleteEntryButtonAction(ActionEvent event) throws Exception{
-    	String file = null;
-    	int num = 0;
-    	Hash hash = new Hash();
-    	String fileName = username;
-    	file = hash.sha256(fileName);
-    	num = loc+2;
-    	
-    	removeLineFromFile(file, num);
-    	updateList(file);
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Confirmation Dialog");
+    	alert.setHeaderText("Look, a Confirmation Dialog");
+    	alert.setContentText("Are you ok with this?");
+
+    	Optional<ButtonType> result = alert.showAndWait();
+    	if (result.get() == ButtonType.OK){
+    		String file = null;
+        	int num = 0;
+        	Hash hash = new Hash();
+        	String fileName = username;
+        	file = hash.sha256(fileName);
+        	num = loc+2;
+        	
+        	removeLineFromFile(file, num);
+        	updateList(file);
+    	} else {
+    		return;
+    	}
     }
     
     /**
